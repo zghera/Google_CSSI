@@ -1,35 +1,50 @@
-<<<<<<< HEAD
-# from google.appengine.ext  import ndb
-=======
-# from google.appengine.ext import ndb
->>>>>>> 2278993dcfcf1c73bab3797a3262c62b7447b070
-# import webapp2
-# import jinja2
-# import os
+from google.appengine.ext  import ndb
+import webapp2
+import jinja2
+import os
 
-import logging
-from flask import Flask
+JINJA_ENVIRONMENT = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+    extensions=['jinja2.ext.autoescape'],
+    autoescape=True)
 
-# JINJA_ENVIRONMENT = jinja2.Environment(
-#     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
-#     extensions=['jinja2.ext.autoescape'],
-#     autoescape=True)
-#
-# class Main(webapp2.RequestHandler):
-#     def get(self):
-#         login_template = JINJA_ENVIRONMENT.get_template('templates/template.html')
-#         self.response.write(login_template.render())
-#
-# class UserProfile(webapp2.RequestHandler):
+class MainHandler(webapp2.RequestHandler):
+    def get(self):
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
+        self.response.write(welcome_template.render())
 
-app = Flask(__name__)
-@app.route('/')
-def hello():
-    return "Hello"
+        login = self.request.get('login')
+        signup = self.request.get('signup')
 
-if __name__ == "__main__":
-<<<<<<< HEAD
-    app.run(host='0.0.0.0', port=4000)
-=======
-    app.run(host='0.0.0.0')
->>>>>>> 2278993dcfcf1c73bab3797a3262c62b7447b070
+        if login:
+            user = self.request.get('email')
+            password = self.request.get('password')
+            user_login = User.query().filter(User.email == user and User.password == password).fetch()
+        elif signup:
+            signup_template = JINJA_ENVIRONMENT.get_template('templates/signup.html')
+            self.response.write(signup_template.render())
+            name = self.request.get('name')
+            email = self.request.get('email')
+            password = self.request.get('password')
+            college = self.request.get('college')
+            courses = self.request.get('courses') #this is a list
+            profile_pic = self.request.get('profile_pic')
+            new_account = User(name = name, email = email, #create a new User database
+                            password = password, college = college,
+                            courses = courses, profile_pic = profile_pic)
+            new_account.put()
+
+class NewsFeedHandler(webapp2.RequestHandler):
+    def post(self):
+        newsfeed_template = JINJA_ENVIRONMENT.get_template('templates/newsfeed.html')
+
+class ProfileHandler(webapp2.RequestHandler):
+
+
+
+
+app = webapp2.WSGIApplication([
+    ('/', Main),
+    ('/newsfeed', NewsFeedHandler),
+    ('/profile', ProfileHandler)
+], debug=True)

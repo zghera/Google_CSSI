@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # from google.appengine.ext  import ndb
+=======
+# from google.appengine.ext import ndb
+>>>>>>> 2278993dcfcf1c73bab3797a3262c62b7447b070
 # import webapp2
 # import jinja2
 # import os
@@ -24,4 +28,8 @@ def hello():
     return "Hello"
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     app.run(host='0.0.0.0', port=4000)
+=======
+    app.run(host='0.0.0.0')
+>>>>>>> 2278993dcfcf1c73bab3797a3262c62b7447b070

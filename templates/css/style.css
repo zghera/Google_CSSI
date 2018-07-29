@@ -1,7 +1,7 @@
-#welcome_background{
-  opacity: .5;
+body{
+  height:100%;
+  width:100%;
 }
-
 
 h1{
   font-size: 200px;
@@ -11,22 +11,30 @@ h1{
   font-size: 50px;
 }
 
-.welcome{
+.welcome-bg{
+  background-image: url("http://www.bestcollegevalues.org/wp-content/uploads/2014/10/vassaar2.jpg");
   width: 100%;
-  height: 700px;
-  display: block;
-  position: relative;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 0px;
+
 }
 
-.welcome::after{
+/* .welcome::after{
   content:"";
-  background: url(http://www.bestcollegevalues.org/wp-content/uploads/2014/10/vassaar2.jpg);
-  height: 100%;
+  background-image: url("http://www.bestcollegevalues.org/wp-content/uploads/2014/10/vassaar2.jpg");
   opacity:.6;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  position: absolute;
+  position: fixed;
   z-index: -1;
-}
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  size: cover;
+  background-position: center;
+} */

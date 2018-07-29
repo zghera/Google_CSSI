@@ -1,5 +1,5 @@
 
-from google.appengine.ext  import ndb
+from google.appengine.ext import ndb
 import webapp2
 import jinja2
 import os
@@ -21,31 +21,34 @@ class MainHandler(webapp2.RequestHandler):
             user = self.request.get('email')
             password = self.request.get('password')
             user_login = User.query().filter(User.email == user and User.password == password).fetch()
-        elif signup:
-            signup_template = JINJA_ENVIRONMENT.get_template('templates/signup.html')
-            self.response.write(signup_template.render())
-            name = self.request.get('name')
-            email = self.request.get('email')
-            password = self.request.get('password')
-            college = self.request.get('college')
-            courses = self.request.get('courses') #this is a list
-            profile_pic = self.request.get('profile_pic')
-            new_account = User(name = name, email = email, #create a new User database
-                            password = password, college = college,
-                            courses = courses, profile_pic = profile_pic)
-            new_account.put()
+
+
+class SignUpHandler(webapp2.RequestHandler):
+    def post(self):
+        signup_template = JINJA_ENVIRONMENT.get_template('templates/signup.html')
+        self.response.write(signup_template.render())
+        name = self.request.get('name')
+        email = self.request.get('email')
+        password = self.request.get('password')
+        college = self.request.get('college')
+        courses = self.request.get('courses') #this is a list
+        profile_pic = self.request.get('profile_pic')
+        new_account = User(name = name, email = email, #create a new User database
+                        password = password, college = college,
+                        courses = courses, profile_pic = profile_pic)
+        new_account.put()
 
 class NewsFeedHandler(webapp2.RequestHandler):
     def post(self):
         newsfeed_template = JINJA_ENVIRONMENT.get_template('templates/newsfeed.html')
 
 class ProfileHandler(webapp2.RequestHandler):
-
-
+    def post(self):
+        newsfeed_template = JINJA_ENVIRONMENT.get_template('templates/newsfeed.html')
 
 
 app = webapp2.WSGIApplication([
-    ('/', Main),
+    ('/', MainHandler),
     ('/newsfeed', NewsFeedHandler),
-    ('/profile', ProfileHandler)
+    ('/profile', ProfileHandler),
 ], debug=True)

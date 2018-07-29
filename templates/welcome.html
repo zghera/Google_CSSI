@@ -17,6 +17,30 @@
        </div>
        <div class = "container ">
          <form action="/profile" method="post">
+           <style>
+              div.background {
+              background: url(klematis.jpg) repeat;
+              border: 2px solid black;
+            }
+
+            div.transbox {
+              margin: 30px;
+              background-color: #3e7578;
+              border: 1px solid black;
+              opacity: 0.6;
+              filter: alpha(opacity=60); /* For IE8 and earlier */
+            }
+
+            div.transbox p {
+              margin: 5%;
+              font-weight: bold;
+              color: #000000;
+            }
+            </style>
+          </head>
+
+          <div class="background">
+            <div class="transbox">
            <p class="flow-text light-blue-text text-accent-3">Email:</p>
            <input type="text" name="email" value=""></p>
            <p class="flow-text light-blue-text text-accent-3">Password:</p>

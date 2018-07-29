@@ -12,18 +12,22 @@
    </head>
    <body>
      <div class="welcome-bg responsive-img">
-       <div>
-         <h1 class="flow-text big-header center-align light-blue-text text-accent-3">College Connect</h1>
-       </div>
-       <div class = "container ">
-         <form action="/profile" method="post">
-           <p class="flow-text light-blue-text text-accent-3">Email:</p>
-           <input type="text" name="email" value=""></p>
-           <p class="flow-text light-blue-text text-accent-3">Password:</p>
-           <input type="text" name="password" value="">
-           <input type="submit" name="login" value="Login">
-           <input type="submit" name="signup" value="Sign Up">
-         </form>
+         <div>
+           <h1 class="flow-text big-header center-align light-blue-text text-accent-3">College Connect</h1>
+         </div>
+         <div class = "container">
+           <form action="/profile" method="post">
+             <div class = "container welcome-bg2">
+               <p class="flow-text light-blue-text">Email:</p>
+               <input class = "light-blue-text text-darken-1" type="text" name="email" value=""></p>
+               <p class="flow-text light-blue-text">Password:</p>
+               <input class = "light-blue-text text-darken-1" type="text" name="password" value="">
+               <div class="row">
+                 <div class="col left-align"><button class="btn waves-effect waves-light light-blue darken-2" type="submit" name="login">LOG IN<i class="material-icons right">lock_open</i></button></div>
+                 <div class="right-align"><button class="btn waves-effect waves-light light-blue darken-2" type="submit" name="signup">SIGN UP<i class="material-icons right">create</i></button></div>
+               </div>
+             </div>
+           </form>
        </div>
      </div>
      <!--  Scripts-->

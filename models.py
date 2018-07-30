@@ -1,7 +1,7 @@
 from google.appengine.ext import ndb
 
 class User(ndb.Model):
-    name = ndb.StringProperty(required=True)
+    name = ndb.StringProperty(repeated=True) #list containing first_name and last_name
     email = ndb.StringProperty(required=True)
     password = ndb.StringProperty(required=True)
     college = ndb.StringProperty(required=True)

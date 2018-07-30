@@ -1,4 +1,10 @@
 from google.appengine.ext import ndb
+from google.appengine.api import urlfetch
+import webapp2
+import os
+import jinja2
+import json
+
 
 class User(ndb.Model):
     name = ndb.StringProperty(repeated=True) #list containing first_name and last_name

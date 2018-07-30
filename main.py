@@ -36,6 +36,12 @@ class SignUpHandler(webapp2.RequestHandler):
     def get (self):
         signup_template=JINJA_ENVIRONMENT.get_template('templates/signup.html')
         self.response.write(signup_template.render())
+
+
+class DashboardHandler(webapp2.RequestHandler):
+    def get(self): #get rid of eventually or check to see if signed in
+        dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
+        self.response.write(dashboard_template.render())
     def post(self):
         first_name = self.request.get('first_name')
         last_name = self.request.get('last_name')
@@ -54,19 +60,18 @@ class SignUpHandler(webapp2.RequestHandler):
         dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
         self.response.write(dashboard_template.render(user_dict))
 
-
-class DashboardHandler(webapp2.RequestHandler):
-    def get(self):
-        dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
-        self.response.write(dashboard_template.render())
-
 class ProfileHandler(webapp2.RequestHandler):
     def post(self):
-        newsfeed_template = JINJA_ENVIRONMENT.get_template('templates/newsfeed.html')
+        newsfeed_template = JINJA_ENVIRONMENT.get_template('templates/userprofile.html')
+
+class CreateConnectHandler(webapp2.RequestHandler):
+    def get(self):
+        createconnect_template = JINJA_ENVIRONMENT.get_template('templates/createconnect.html')
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/signup', SignUpHandler),
     ('/dashboard', DashboardHandler),
     ('/profile', ProfileHandler),
+    ('/createconnect',CreateConnectHandler)
 ], debug=True)

@@ -10,15 +10,15 @@ handlers:
 - url: /js
   static_dir: templates/js
 
+- url: /css
+  static_dir: templates/css
+
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
 
 - url: /app-stylesheets
   static_dir: app-stylesheets
-
-- url: /css
-  static_dir: templates/css
 
 - url: /my-images
   static_dir: my-images

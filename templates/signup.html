@@ -15,7 +15,7 @@
     <div class="container">
       <h1>Create a New Account</h1>
       <div class="row">
-        <form action="/signup" method="post">
+        <form class = "col s12" action="/signup" method="post">
       <!--First/Last Name-->
           <div class="row">
             <div class="input-field col s6">
@@ -59,7 +59,7 @@
             </div>
           </div>
       <!--Upload Profile Pic-->
-          <form action="#" enctype="multipart/form-data">
+          <!-- <form action="#" enctype="multipart/form-data"> -->
             <div class="file-field input-field">
               <div class="btn">
                 <span>image</span>
@@ -69,14 +69,17 @@
                 <input class="file-path validate" type="text" placeholder="Upload a profile pic" name="profile_pic">
               </div>
             </div>
-          </form>
+          <!-- </form> -->
       <!--SignUp-->
           <div class="row">
-            <button class="btn waves-effect right" type="submit" name="signup">Sign Up<i class="material-icons right">send</i><button/>
+            <button class="btn waves-effect right" type="submit" name="signup">Sign Up<i class="material-icons right">send</i></button>
           </div>
         </form>
       </div>
     </div>
+
+
+
     <!--  Scripts-->
      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->
      <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

@@ -9,76 +9,75 @@
      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"> -->
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-     <link href="css/welcome.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+     <link href="css/signup.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   </head>
   <body>
     <div class="container">
-      <h1>Create a New Account</h1>
-      <div class="row">
-        <form class = "col s12" action="/signup" method="post">
-      <!--First/Last Name-->
-          <div class="row">
-            <div class="input-field col s6">
-              <i class="material-icons prefix">account_circle</i>
-              <input id="first_name" type="text" class="validate" name="first_name">
-              <label class="active" for="first_name">First Name </label>
+      <div class="card-panel">
+        <h2>Create a New Account</h2>
+        <div class="row">
+          <form class="col s12" action="/signup" method="post">
+        <!--First/Last Name-->
+            <div class="row">
+              <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="first_name" type="text" class="validate" name="first_name">
+                <label class="active" for="first_name">First Name </label>
+              </div>
+              <div class="input-field col s6">
+                <input id="last_name" type="text" class="validate"name="last_name">
+                <label for="last_name">Last Name</label>
+              </div>
             </div>
-            <div class="input-field col s6">
-              <input id="last_name" type="text" class="validate"name="last_name">
-              <label for="last_name">Last Name</label>
+        <!--College-->
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">school</i>
+                <input id="college" type="text" class="validate" name="college">
+                <label for="college">College/University</label>
+              </div>
             </div>
-          </div>
-      <!--College-->
-          <div class="row">
-            <div class="input-field col s12">
-              <i class="material-icons prefix">school</i>
-              <input id="college" type="text" class="validate" name="college">
-              <label for="college">College/University</label>
+        <!--Courses-->
+            <div class="chips chips-placeholder">
+              <i class="material-icons prefix">storage</i>
+              <input class="custom-class" name="courses">
+              <label for="courses">Courses</label>
             </div>
-          </div>
-      <!--Courses-->
-          <div class="row chips chips-placeholder">
-            <i class="material-icons prefix">storage</i>
-            <input class="custom-class" name="courses">
-            <label for="courses">Courses</label>
-          </div>
-      <!--Password-->
-          <div class="row">
-            <div class="input-field col s12">
-              <i class="material-icons prefix">lock</i>
-              <input id="password" type="text" class="validate" name="password">
-              <label for="password">Password</label>
+        <!--Password-->
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">lock</i>
+                <input id="password" type="text" class="validate" name="password">
+                <label for="password">Password</label>
+              </div>
             </div>
-          </div>
-      <!--Email-->
-          <div class="row">
-            <div class="input-field col s12">
-              <i class="material-icons prefix">email</i>
-              <input type="email" type="email" class="validate" name="email">
-              <label for="email">Email</label>
+        <!--Email-->
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">email</i>
+                <input type="email" type="email" class="validate" name="email">
+                <label for="email">Email</label>
+              </div>
             </div>
-          </div>
-      <!--Upload Profile Pic-->
+        <!--Upload Profile Pic-->
           <!-- <form action="#" enctype="multipart/form-data"> -->
             <div class="file-field input-field">
               <div class="btn">
                 <span>image</span>
                 <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="Upload a profile pic" name="profile_pic">
+                </div>
               </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Upload a profile pic" name="profile_pic">
-              </div>
-            </div>
-          <!-- </form> -->
+          <!--</form> -->
       <!--SignUp-->
-          <div class="row">
-            <button class="btn waves-effect right" type="submit" name="signup">Sign Up<i class="material-icons right">send</i></button>
-          </div>
-        </form>
+            <div class="row">
+              <button class="btn waves-effect right" type="submit" name="signup">Sign Up<i class="material-icons right">send</i></button>
+            </div>
+          </form>
       </div>
     </div>
-
-
 
     <!--  Scripts-->
      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->

@@ -36,9 +36,6 @@ class SignUpHandler(webapp2.RequestHandler):
     def get (self):
         signup_template=JINJA_ENVIRONMENT.get_template('templates/signup.html')
         self.response.write(signup_template.render())
-
-
-class DashboardHandler(webapp2.RequestHandler):
     def post(self):
         first_name = self.request.get('first_name')
         last_name = self.request.get('last_name')
@@ -49,11 +46,17 @@ class DashboardHandler(webapp2.RequestHandler):
         profile_pic = self.request.get('profile_pic')
         new_user = User(name = first_name + last_name, email = email,
                         password = password, college = college,
-                        courses = courses,) #profile_pic = profile_pic)
+                        courses = courses, profile_pic = profile_pic)
         new_user.put()
         user_dict={'user':new_user}
 
-        self.response.write(JINJA_ENVIRONMENT.get_template('templates/dashboard.html').render(user_dict))
+        dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
+        self.response.write(dashboard_template.render(user_dict))
+
+class DashboardHandler(webapp2.RequestHandler):
+    def get(self):
+        dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
+        self.response.write(dashboard_template.render())
 
 class ProfileHandler(webapp2.RequestHandler):
     def post(self):

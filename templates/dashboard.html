@@ -1,22 +1,128 @@
 <!DOCTYPE html>
- <html>
-   <head>
-     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
      <meta name="viewport" content="width=device-width, initial-scale=1"/>
-     <title>Parallax Template - Materialize</title>
+     <title>College Connect</title>
 
      <!--CSS-->
      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"> -->
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-     <link href="css/welcome.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-   </head>
-   <body>
+     <link href="css/dashboard.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  </head>
+  <body>
+    <nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo center">College Connect</a>
+      <ul id="slide-out" class="sidenav">
+        <li>
+          <div class="user-view">
+            <div class="background">
+              <img src="images/office.jpg">
+            </div>
+            <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+            <a href="#name"><span class="white-text name">First Last</span></a>
+            <a href="#email"><span class="white-text email">username@gmail.com</span></a>
+          </div>
+        </li>
+        <li><a href="#!"><i class="material-icons">event_note</i>My Schedule</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="subheader">Let's Connect!</a></li>
+        <li><a class="waves-effect" href="#!">Host a Connect</a></li>
+        <li><a class-"waves-effect" href="#!">View a Connect</a></li>
+        <li><a class="waves-effect" href="#!">Join a Connect</a></li>
+      </ul>
+      <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-     <!--  Scripts-->
+
+
+
+
+
+
+
+      <ul class="left hide-on-med-and down">
+        <a href="#" data-target="mobile-demo" class="sideNav"><i class="material-icons">menu</i></a>
+
+      </ul>
+
+      <ul class="left hide-on-med-and down">
+        <li><a href='dashboard.html'><i class="material-icons prefix">home</i></a></li>
+      </ul>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="createconnect.html"><i class="material-icons prefix">add_alert</i></a></li>
+        <li><a href="messages.html"><i class="material-icons prefix">message</i></a></li>
+        <li><a href="userprofile.html"><i class="material-icons prefix">account_circle</i></a></li>
+        <li><a href="settings.html"><i class="material-icons prefix">settings</i></a></li>
+      </ul>
+    </div>
+    </nav>
+
+
+
+
+    <div class="container" style="margin-top: 25px">
+    <!-- Page Layout here -->
+      <div class="row">
+        <div class="col s11">
+      <!-- Grey navigation panel -->
+          <ul class="collection with-header">
+            <li class="collection-header"><h5>username</h5>
+              <form>
+                <div class="input-field">
+                  <input id="search" type="search" required>
+                  <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                  <i class="material-icons">close</i>
+                </div>
+              </form>
+            </li>
+          </ul>
+      </div>
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="card">
+            <div class="card-image">
+              <img src="images/sample-1.jpg">
+              <span class="card-title">Card Title</span>
+              <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+            </div>
+            <div class="card-content">
+              <p>NEW POST FROM USER</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s9">
+    <!-- Teal page content  -->
+      </div>
+
+      </div>
+    </div>
+
+    <!--  Scripts-->
      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->
      <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
      <script type="text/javascript" src="js/materialize.min.js"></script>
-     <script src="js/welcome.js" type="text/javascript"></script>
-   </body>
- </html>
+     <script src="js/dashboard.js"></script>
+    <script type="text/javascript">$(".button-collapse").sideNav();</script>
+  </body>
+
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">College Connect</h5>
+          <p class="grey-text text-lighten-4">Created by CSSI_KIR: Tiasa, Zach, Najib</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        © 2018 Copyright Text
+        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+      </div>
+    </div>
+  </footer>
+</html>

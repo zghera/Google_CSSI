@@ -7,11 +7,11 @@ api_version: 1
 threadsafe: yes
 
 handlers:
-- url: js
-  static_dir: /templates/js
+- url: /js
+  static_dir: templates/js
 
-- url: /templates/css
-  static_dir: css
+- url: /css
+  static_dir: templates/css
 
 - url: /favicon\.ico
   static_files: favicon.ico
@@ -19,9 +19,6 @@ handlers:
 
 - url: /app-stylesheets
   static_dir: app-stylesheets
-
-- url: /css
-  static_dir: templates/css
 
 - url: /my-images
   static_dir: my-images

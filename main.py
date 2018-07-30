@@ -13,19 +13,20 @@ class MainHandler(webapp2.RequestHandler):
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
 
-        login = self.request.get('login')
-        signup = self.request.get('signup')
+    def post(self):
+        email = self.request.get('email')
+        password = self.request.get('password')
 
-        if login:
-            user = self.request.get('email')
-            password = self.request.get('password')
-            user_login = User.query().filter(User.email == user and User.password == password).fetch()
+        if (verification(email,password)):
+            self.response.write(JINJA_ENVIRONMENT.get_template('templates/dashboard.html').render())
+        else
+            #display error message
+
+def verification(email,password):
+    
 
 class SignUpHandler(webapp2.RequestHandler):
     def post(self):
-        signup_template = JINJA_ENVIRONMENT.get_template('templates/signup.html')
-        self.response.write(signup_template.render())
-
         first_name = self.request.get('first_name')
         last_name = self.request.get('last_name')
         email = self.request.get('email')
@@ -37,6 +38,8 @@ class SignUpHandler(webapp2.RequestHandler):
                         password = password, college = college,
                         courses = courses, profile_pic = profile_pic)
         new_account.put()
+
+        self.response.write(JINJA_ENVIRONMENT.get_template('templates/dashboard.html').render())
 
 class NewsFeedHandler(webapp2.RequestHandler):
     def post(self):

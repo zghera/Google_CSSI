@@ -53,7 +53,7 @@ class DashboardHandler(webapp2.RequestHandler):
         new_user.put()
         user_dict={'user':new_user}
 
-        self.response.write(JINJA_ENVIRONMENT.get_template('templates/dashboard.html').render())
+        self.response.write(JINJA_ENVIRONMENT.get_template('templates/dashboard.html').render(user_dict))
 
 class ProfileHandler(webapp2.RequestHandler):
     def post(self):

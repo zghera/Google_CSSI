@@ -1,16 +1,23 @@
 from google.appengine.ext import ndb
+from google.appengine.api import urlfetch
+import webapp2
+import os
+import jinja2
+import json
+
 
 class User(ndb.Model):
-    name = ndb.StringProperty(required=True)
-    password = ndb.StringProperty(required=True)
+    name = ndb.StringProperty(repeated=True) #list containing first_name and last_name
     email = ndb.StringProperty(required=True)
+    password = ndb.StringProperty(required=True)
     college = ndb.StringProperty(required=True)
+    courses = ndb.StringProperty(repeated=True) #list of courses/subjects and (un)declared major
+    profile_pic = ndb.ImageProperty(required=True) #Image Property??
     major = ndb.StringProperty(required=True)
     home_town = ndb.StringProperty(required=True)
-    major = ndb.StringProperty(required=True)
     bio = ndb.StringProperty(required=True)
-    # pic = ndb.StringProperty(required=True)
-    # college_pic = ndb.StringProperty(required=True) #figure out how users give these
+    pic = ndb.StringProperty(required=True) #later use blobstore
+    college_pic = ndb.StringProperty(required=True) #later use blobstore
     connect_events = ndb.StringProperty(repeated=True)
     courses = ndb.StringProperty(repeated=True) #list of courses/subjects and (un)declared major
     friends = ndb.StringProperty(repeated=True, required=False)

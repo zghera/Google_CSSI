@@ -16,7 +16,7 @@
       <div class="card-panel">
         <h2>Create a New Account</h2>
         <div class="row">
-          <form class="col s12" action="/" method="post">
+          <form class="col s12" action="/signup" method="post">
         <!--First/Last Name-->
             <div class="row">
               <div class="input-field col s6">
@@ -64,10 +64,10 @@
               <div class="file-field input-field">
                 <div class="btn">
                   <span>image</span>
-                  <input type="file" name="profile_pic">
+                  <input type="file">
                 </div>
                 <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text" placeholder="Upload a profile pic">
+                  <input class="file-path validate" type="text" placeholder="Upload a profile pic" name="profile_pic">
                 </div>
               </div>
             </form>

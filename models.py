@@ -13,7 +13,6 @@ class User(ndb.Model):
     college = ndb.StringProperty(required=True)
     courses = ndb.StringProperty(repeated=True) #list of courses/subjects and (un)declared major
     profile_pic = ndb.ImageProperty(required=True) #Image Property??
-
     major = ndb.StringProperty(required=True)
     home_town = ndb.StringProperty(required=True)
     bio = ndb.StringProperty(required=True)

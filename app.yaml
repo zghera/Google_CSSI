@@ -7,7 +7,6 @@ api_version: 1
 threadsafe: yes
 
 handlers:
-
 - url: /js
   static_dir: templates/js
 

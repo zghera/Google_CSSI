@@ -15,7 +15,7 @@
     <div class="container">
       <h1>Create a New Account</h1>
       <div class="row">
-        <form class="col s12" action="/dashboard" method="post">
+        <form action="/signup" method="post">
       <!--First/Last Name-->
           <div class="row">
             <div class="input-field col s6">
@@ -37,7 +37,7 @@
             </div>
           </div>
       <!--Courses-->
-          <div class="chips chips-placeholder">
+          <div class="row chips chips-placeholder">
             <i class="material-icons prefix">storage</i>
             <input class="custom-class" name="courses">
             <label for="courses">Courses</label>
@@ -63,10 +63,10 @@
             <div class="file-field input-field">
               <div class="btn">
                 <span>image</span>
-                <input type="file" name="profile_pic">
+                <input type="file">
               </div>
               <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Upload a profile pic">
+                <input class="file-path validate" type="text" placeholder="Upload a profile pic" name="profile_pic">
               </div>
             </div>
           </form>

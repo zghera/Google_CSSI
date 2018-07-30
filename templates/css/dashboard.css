@@ -1,0 +1,19 @@
+.hidden{
+  display: none !important;
+}
+
+.cardpanel{
+  margin-left: 50px
+  margin-right: 50px
+
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}

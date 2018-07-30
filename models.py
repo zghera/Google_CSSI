@@ -7,13 +7,15 @@ import json
 
 
 class User(ndb.Model):
-    name = ndb.StringProperty(required=True)
-    password = ndb.StringProperty(required=True)
+    name = ndb.StringProperty(repeated=True) #list containing first_name and last_name
     email = ndb.StringProperty(required=True)
+    password = ndb.StringProperty(required=True)
     college = ndb.StringProperty(required=True)
+    courses = ndb.StringProperty(repeated=True) #list of courses/subjects and (un)declared major
+    profile_pic = ndb.ImageProperty(required=True) #Image Property??
+
     major = ndb.StringProperty(required=True)
     home_town = ndb.StringProperty(required=True)
-    major = ndb.StringProperty(required=True)
     bio = ndb.StringProperty(required=True)
     # pic = ndb.StringProperty(required=True)
     # college_pic = ndb.StringProperty(required=True) #figure out how users give these

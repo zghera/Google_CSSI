@@ -7,17 +7,11 @@ api_version: 1
 threadsafe: yes
 
 handlers:
-<<<<<<< HEAD
 - url: js
   static_dir: /templates/js
 
-=======
->>>>>>> 9e97d6e2ebc95a91544d61e2ebe785219f0e8e2a
 - url: /templates/css
   static_dir: css
-- url: /js
-  static_dir: templates/js
-
 
 - url: /favicon\.ico
   static_files: favicon.ico

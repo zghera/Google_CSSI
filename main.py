@@ -93,7 +93,7 @@ class DashboardHandler(BaseHandler):
 
         self.response.write(dashboard_template.render(user_dict))
 
-class Feedhandler(BaseHandler):
+class FeedHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
@@ -139,6 +139,7 @@ class HostConnectHandler(BaseHandler):
 class JoinConnectHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
 
         user_dict={'user':user}
         joinconnect_template = JINJA_ENVIRONMENT.get_template('templates/joinconnect.html')
@@ -194,11 +195,11 @@ app = webapp2.WSGIApplication([
     ('/', WelcomeHandler),
     ('/signup', SignUpHandler),
     ('/dashboard', DashboardHandler),
-    ('/feed',Feedhandler)
+    ('/feed',FeedHandler),
     ('/userprofile', UserProfileHandler),
     ('/hostconnect',HostConnectHandler),
     ('/joinconnect',JoinConnectHandler),
     ('/friends',FriendsHandler),
-    ('/courses',Courseshandler)
-    ('/upcomingconnects',UpcomingConnectsHandler)
+    ('/courses',CoursesHandler),
+    ('/upcomingconnects',UpcomingConnectsHandler),
 ], debug=True, config=config)

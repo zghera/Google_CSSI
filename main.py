@@ -93,6 +93,16 @@ class DashboardHandler(BaseHandler):
 
         self.response.write(dashboard_template.render(user_dict))
 
+class FeedHandler(BaseHandler):
+    def get(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        feed_template = JINJA_ENVIRONMENT.get_template('templates/partials/feed.html')
+        self.response.write(freinds_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
 
 class UserProfileHandler(BaseHandler):
     def get (self):
@@ -130,6 +140,7 @@ class JoinConnectHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
 
+
         user_dict={'user':user}
         joinconnect_template = JINJA_ENVIRONMENT.get_template('templates/joinconnect.html')
         self.response.write(joinconnect_template.render(user_dict))
@@ -152,6 +163,26 @@ class FriendsHandler(BaseHandler):
         friends_added = self.request.get('friends_added')
         user.friends.extend(friend_added)
 
+class CoursesHandler(BaseHandler):
+    def get(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        courses_template = JINJA_ENVIRONMENT.get_template('templates/courses.html')
+        self.response.write(freinds_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
+class UpcomingConnectsHandler(BaseHandler):
+    def get(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        friends_template = JINJA_ENVIRONMENT.get_template('templates/partials/upcomingconnects.html')
+        self.response.write(freinds_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
 
 
 
@@ -164,8 +195,11 @@ app = webapp2.WSGIApplication([
     ('/', WelcomeHandler),
     ('/signup', SignUpHandler),
     ('/dashboard', DashboardHandler),
+    ('/feed',FeedHandler),
     ('/userprofile', UserProfileHandler),
     ('/hostconnect',HostConnectHandler),
     ('/joinconnect',JoinConnectHandler),
     ('/friends',FriendsHandler),
+    ('/courses',CoursesHandler),
+    ('/upcomingconnects',UpcomingConnectsHandler),
 ], debug=True, config=config)

@@ -30,3 +30,8 @@ body{
   background-position: 50% 50%;
   background-attachment: fixed;
 }
+
+.userp {
+  display: inline;
+  width: 100%;
+}

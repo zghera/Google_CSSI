@@ -2,8 +2,15 @@ from google.appengine.ext import ndb
 import webapp2
 import jinja2
 import os
-from models import User
 from webapp2_extras import sessions
+from models import User
+from models import ConnectEvent
+from models import UserConnectEvent
+from models import FeedMessage
+from models import Course
+from models import CourseRoster
+from models import Organization
+from models import OrganizationRoster
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -79,8 +86,11 @@ class SignUpHandler(BaseHandler):
 class DashboardHandler(BaseHandler):
     def get(self): #get rid of eventually or check to see if signed in
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        #user_key = User.query().filter(User.email == self.session.get('user')).get().key
         user_dict={'user':user}
         dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
+
+
         self.response.write(dashboard_template.render(user_dict))
 
 
@@ -110,19 +120,23 @@ class HostConnectHandler(BaseHandler):
         alert_time = self.request.get('alert_time')
         new_ConnectEvent = ConnectEvent(time = time,location = location,
                                         alert_time = alert_time)
-        users = [user]
-        new_UserConnectEvent = UserConnectEvent(users=users,
-                                                connect_event=new_ConnectEvent)
+        new_ConnectEvent_key = new_ConnectEvent.put()
+        users_keys = [user.key]
+        new_UserConnectEvent = UserConnectEvent(users=users_keys,
+                                                connect_event=new_ConnectEvent_key)
+        new_UserConnectEvent.put()
 
 class JoinConnectHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
         user_dict={'user':user}
         joinconnect_template = JINJA_ENVIRONMENT.get_template('templates/joinconnect.html')
         self.response.write(joinconnect_template.render(user_dict))
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
 
 
 class FriendsHandler(BaseHandler):

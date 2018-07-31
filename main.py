@@ -38,7 +38,7 @@ class WelcomeHandler(BaseHandler):
 
         if ((verification(email,password))):
             user = User.query().filter(User.email == email).fetch()[0]
-            self.session['user']= user
+            self.session['user']= email
             user_dict = {'user':user}
             self.response.write(JINJA_ENVIRONMENT.get_template('templates/dashboard.html').render(user_dict))
         else:
@@ -66,9 +66,11 @@ class SignUpHandler(BaseHandler):
         name = [first_name,last_name]
         new_user = User(name = name, email = email,
                         password = password, college = college,
-                        courses = courses, profile_pic = profile_pic)
+                        courses = courses, profile_pic = profile_pic,
+                        college_pic = "",friends=[],)
         new_user.put()
-        self.session['user'] = new_user;
+        self.session['user'] = email
+
         user_dict={'user':new_user}
 
         dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
@@ -92,6 +94,10 @@ class CreateConnectHandler(BaseHandler):
     def get(self):
         createconnect_template = JINJA_ENVIRONMENT.get_template('templates/createconnect.html')
 
+config = {}
+config['webapp2_extras.sessions'] = {
+    'secret_key': 'some-secret-key',
+}
 
 app = webapp2.WSGIApplication([
     ('/', WelcomeHandler),
@@ -99,4 +105,4 @@ app = webapp2.WSGIApplication([
     ('/dashboard', DashboardHandler),
     ('/profile', ProfileHandler),
     ('/createconnect',CreateConnectHandler)
-], debug=True)
+], debug=True, config=config)

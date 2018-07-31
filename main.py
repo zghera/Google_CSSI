@@ -66,8 +66,8 @@ class SignUpHandler(BaseHandler):
         name = [first_name,last_name]
         new_user = User(name = name, email = email,
                         password = password, college = college,
-                        courses = courses, profile_pic = profile_pic,
-                        college_pic = "",friends=[],)
+                        profile_pic = profile_pic, college_pic = "",
+                        friends=[],)
         new_user.put()
         self.session['user'] = email
 
@@ -78,21 +78,68 @@ class SignUpHandler(BaseHandler):
 
 class DashboardHandler(BaseHandler):
     def get(self): #get rid of eventually or check to see if signed in
-        user_dict={'user':self.session.get('user')}
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
         dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
         self.response.write(dashboard_template.render(user_dict))
 
 
-class ProfileHandler(BaseHandler):
+class UserProfileHandler(BaseHandler):
     def get (self):
-        user_dict={'user':self.session.get('user')}
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        userprofile_template = JINJA_ENVIRONMENT.get_template('templates/userprofile.html')
+        self.response.write(profile_template.render(user_dict))
+
     def post(self):
-        user_dict={'user':self.session.get('user')}
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
         newsfeed_template = JINJA_ENVIRONMENT.get_template('templates/userprofile.html')
 
-class CreateConnectHandler(BaseHandler):
+class HostConnectHandler(BaseHandler):
     def get(self):
-        createconnect_template = JINJA_ENVIRONMENT.get_template('templates/createconnect.html')
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        hostconnect_template = JINJA_ENVIRONMENT.get_template('templates/hostconnect.html')
+        self.response.write(hostconnect_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        time = self.request.get('time')
+        location = self.request.get('location')
+        alert_time = self.request.get('alert_time')
+        new_ConnectEvent = ConnectEvent(time = time,location = location,
+                                        alert_time = alert_time)
+        users = [user]
+        new_UserConnectEvent = UserConnectEvent(users=users,
+                                                connect_event=new_ConnectEvent)
+
+class JoinConnectHandler(BaseHandler):
+    def get(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        joinconnect_template = JINJA_ENVIRONMENT.get_template('templates/joinconnect.html')
+        self.response.write(joinconnect_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
+
+class FriendsHandler(BaseHandler):
+    def get(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        friends_template = JINJA_ENVIRONMENT.get_template('templates/friends.html')
+        self.response.write(freinds_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        # friend_added = self.request.get('friends_added') #if just one friend
+        friends_added = self.request.get('friends_added')
+        user.friends.extend(friend_added)
+
+
+
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -103,6 +150,8 @@ app = webapp2.WSGIApplication([
     ('/', WelcomeHandler),
     ('/signup', SignUpHandler),
     ('/dashboard', DashboardHandler),
-    ('/profile', ProfileHandler),
-    ('/createconnect',CreateConnectHandler)
+    ('/userprofile', UserProfileHandler),
+    ('/hostconnect',HostConnectHandler),
+    ('/joinconnect',JoinConnectHandler),
+    ('/friends',FriendsHandler),
 ], debug=True, config=config)

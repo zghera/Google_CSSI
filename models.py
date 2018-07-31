@@ -9,9 +9,9 @@ class User(ndb.Model):
     name = ndb.StringProperty(repeated=True) #list containing first_name and last_name
     email = ndb.StringProperty(required=True)
     password = ndb.StringProperty(required=True)
-    #college = ndb.StringProperty(required=True)
-    courses = ndb.KeyProperty(Course, repeated=True) #list of courses/subjects
-    courses = ndb.StringProperty(required=True)
+    college = ndb.StringProperty(required=True)
+    #courses = ndb.KeyProperty(Course, repeated=True) #list of courses/subjects
+    #courses = ndb.StringProperty(required=True)
     major = ndb.StringProperty(required=False)
     home_town = ndb.StringProperty(required=False)
     bio = ndb.StringProperty(required=False)
@@ -40,7 +40,7 @@ class FeedMessage(ndb.Model):
 
 class Course(ndb.Model):
     name = ndb.StringProperty(required=True)
-    description = ndb.StringProperty(required=True)
+    #description = ndb.StringProperty(required=True)
 
 class CourseRoster(ndb.Model):
     user = ndb.KeyProperty(User)

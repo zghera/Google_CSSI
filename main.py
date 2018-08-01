@@ -1,29 +1,72 @@
+from __future__ import print_function
+import datetime
+from apiclient.discovery import build
+from httplib2 import Http
+from oauth2client import file as oauth_file, client, tools
+
 from google.appengine.ext import ndb
 import webapp2
 import jinja2
 import os
 from webapp2_extras import sessions
-from google.appengine.api import mail
 from models import *
-# from models import User
-# from models import ConnectEvent
-# from models import UserConnectEvent
-# from models import FeedMessage
-# from models import Course
-# from models import CourseRoster
-# from models import Organization
-# from models import OrganizationRoster
+from google.appengine.api import mail
+
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+SCOPES = 'https://www.googleapis.com/auth/calendar'
+
+store = oauth_file.Storage('token.json')
+creds = store.get()
+if not creds or creds.invalid:
+    flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
+    creds = tools.run_flow(flow, store)
+
+service = build('calendar', 'v3', http=creds.authorize(Http()))
+
+
 def verification(email,password):
     #verify email and password
     #return true if exists
     #return false if account doesnt exist with given input
     return True
+
+
+def calendar_event(summary,location,description,time_zone,start_time,end_time,):
+    event = {
+      'summary': 'Come to the Party',
+      'location': '800 Howard St., San Francisco, CA 94103',
+      'description': 'Its gonna be L1T.',
+      'start': {
+        'dateTime': '2018-09-01T09:00:00-07:00',
+        'timeZone': 'America/Los_Angeles',
+      },
+      'end': {
+        'dateTime': '2018-09-01T17:00:00-07:00',
+        'timeZone': 'America/Los_Angeles',
+      },
+      'recurrence': [
+        'RRULE:FREQ=DAILY;COUNT=0'
+      ],
+      'attendees': [
+        {'email': 'abdinajka@gmail.com'},
+        {'email': 'teddymk@google.com'},
+      ],
+      'reminders': {
+        'useDefault': False,
+        'overrides': [
+          {'method': 'email', 'minutes': 24 * 60},
+          {'method': 'popup', 'minutes': 60},
+        ],
+      },
+    }
+    event = service.events().insert(calendarId='college.connect.cssi@gmail.com', body=event).execute()
+    event_link = event.get('htmlLink')
+    return event_link
 
 def email(connect_title,time,location,user_email,user_name,mail_subject):
     sender_address = "college.connect.cssi@gmail.com"
@@ -91,7 +134,7 @@ class WelcomeHandler(BaseHandler):
             user = User.query().filter(User.email == email).fetch()[0]
             self.session['user']= email
             user_dict = {'user':user}
-            self.response.write(JINJA_ENVIRONMENT.get_template('templates/dashboard.html').render(user_dict))
+            self.redirect('/dashboard')
         else:
             pass
             #display error message in welcome
@@ -217,11 +260,16 @@ class HostConnectHandler(BaseHandler):
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         time = self.request.get('time')
+        date = self.request.get('date')
+
+
+
+        durration = self.request.get('durration')
         location = self.request.get('location')
         connect_title = self.request.get('title')
         course = self.request.get('course')
-        new_ConnectEvent = ConnectEvent(time = time, location = location,
-                                        connect_title = connect_title, course = course)
+        new_ConnectEvent = ConnectEvent(connect_time = time_date, connect_location = location,
+                                durration = durration, connect_title = connect_title, course = course)
         new_ConnectEvent_key = new_ConnectEvent.put()
         users_keys = [user.key]
         new_UserConnectEvent = UserConnectEvent(users=users_keys,

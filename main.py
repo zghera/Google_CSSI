@@ -37,11 +37,11 @@ def email(connect_title,time,location,user_email,user_name,mail_subject):
         The College Connect Team
         """
     mail_html = """
-        <html><head></head><body>"""+user_name+""":<br>
+        <html><head></head><body>"""+user_name+""":<br><br>
         Your Connect Event, <b>"""+connect_title+"""</b>, is scheduled for
-        """+time+""" at """+location+"""!<br>
+        """+time+""" at """+location+"""!<br><br>
 
-        Thank you for choosing College Connect!!
+        Thank you for choosing College Connect!!<br>
         The College Connect Team
         </body></html>"""
 
@@ -144,8 +144,6 @@ class DashboardHandler(BaseHandler):
         user_dict={'user':user}
         dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
 
-        email("Party","7/31/18 4:00pm","The moon","abdinajka@gmail.com","Najib","Here is your email")
-
         self.response.write(dashboard_template.render(user_dict))
 
 class FeedHandler(BaseHandler):
@@ -153,7 +151,7 @@ class FeedHandler(BaseHandler):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
         feed_template = JINJA_ENVIRONMENT.get_template('templates/partials/feed.html')
-        self.response.write(freinds_template.render(user_dict))
+        self.response.write(feed_template.render(user_dict))
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
@@ -164,12 +162,23 @@ class UserProfileHandler(BaseHandler):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
         userprofile_template = JINJA_ENVIRONMENT.get_template('templates/userprofile.html')
-        self.response.write(profile_template.render(user_dict))
+        self.response.write(userprofile_template.render(user_dict))
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
         newsfeed_template = JINJA_ENVIRONMENT.get_template('templates/userprofile.html')
+
+class MessagesHandler(BaseHandler):
+    def get (self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        messages_template = JINJA_ENVIRONMENT.get_template('templates/messages.html')
+        self.response.write(messages_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
 
 class HostConnectHandler(BaseHandler):
     def get(self):
@@ -191,6 +200,8 @@ class HostConnectHandler(BaseHandler):
         new_UserConnectEvent = UserConnectEvent(users=users_keys,
                                                 connect_event=new_ConnectEvent_key)
         new_UserConnectEvent.put()
+
+        email(connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
 
 class JoinConnectHandler(BaseHandler):
     def get(self):
@@ -222,22 +233,30 @@ class CoursesHandler(BaseHandler):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
         courses_template = JINJA_ENVIRONMENT.get_template('templates/courses.html')
-        self.response.write(freinds_template.render(user_dict))
+        self.response.write(courses_template.render(user_dict))
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
 
-class UpcomingConnectsHandler(BaseHandler):
+class ViewConnectsHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
-        friends_template = JINJA_ENVIRONMENT.get_template('templates/partials/upcomingconnects.html')
-        self.response.write(freinds_template.render(user_dict))
+        viewconnects_template = JINJA_ENVIRONMENT.get_template('templates/partials/viewconnects.html')
+        self.response.write(viewconnects_template.render(user_dict))
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
 
+class SettingsHandler(BaseHandler):
+    def get(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        settings_template = JINJA_ENVIRONMENT.get_template('templates/partials/settings.html')
+        self.response.write(settings_template.render(user_dict))
 
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
 
 
 config = {}
@@ -255,5 +274,7 @@ app = webapp2.WSGIApplication([
     ('/joinconnect',JoinConnectHandler),
     ('/friends',FriendsHandler),
     ('/courses',CoursesHandler),
-    ('/upcomingconnects',UpcomingConnectsHandler),
+    ('/messages',MessagesHandler),
+    ('/settings',SettingsHandler),
+    ('/viewconnects',ViewConnectsHandler)
 ], debug=True, config=config)

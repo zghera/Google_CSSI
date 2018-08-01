@@ -41,10 +41,8 @@ class UserConnectEvent(ndb.Model):
     connect_event = ndb.KeyProperty(ConnectEvent)
 
 class FeedMessage(ndb.Model):
-    post_type = ndb.StringProperty(required=True)
-    content = ndb.StringProperty(required=True)
-    connect_event = ndb.KeyProperty(ConnectEvent)
-    user = ndb.KeyProperty(User)
+    post = ndb.StringProperty(required=True)
+    user = ndb.KeyProperty(kind=User, required=False)
 
 
 class Organization(ndb.Model):

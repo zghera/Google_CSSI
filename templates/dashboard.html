@@ -13,14 +13,14 @@
   </head>
   <body>
     {% include 'templates/partials/navbar.html' %}
-
+    
     <!--Post Status Bar-->
       <div class="cardpanel" style="padding-top: 15px">
         <div class="row">
           <div class="col s6 push-s3">
             <div class="card-panel">
               <div class="row">
-                <form class="col s12" action="/signup" method="post">
+                <form class="col s12" method="post" action="/dashboard">
                   <div class="row">
                     <div class="input-field col s12">
                       <input id="status" type="text" class="validate" name="status">
@@ -35,13 +35,13 @@
         </div>
       </div>
 
-    <!--My Feed-->
-      <div class="cardpanel">
+    <!-- My Feed-->
+      <div class="cardpanel" hidden>
         <div class="row">
           <div class="col s6 push-s3">
             <div class="card-panel">
               <div class="row">
-                <p>This is a post</p>
+                {{add_post}}
               </div>
             </div>
           </div>
@@ -53,6 +53,7 @@
       <!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="js/jquery.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
       <script type="text/javascript" src="js/dashboard.js">
       $(".button-collapse").sideNav();
       </script>

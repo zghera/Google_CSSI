@@ -3,19 +3,65 @@ import webapp2
 import jinja2
 import os
 from webapp2_extras import sessions
-from models import User
-from models import ConnectEvent
-from models import UserConnectEvent
-from models import FeedMessage
-from models import Course
-from models import CourseRoster
-from models import Organization
-from models import OrganizationRoster
+from google.appengine.api import mail
+from models import *
+# from models import User
+# from models import ConnectEvent
+# from models import UserConnectEvent
+# from models import FeedMessage
+# from models import Course
+# from models import CourseRoster
+# from models import Organization
+# from models import OrganizationRoster
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
+
+def verification(email,password):
+    #verify email and password
+    #return true if exists
+    #return false if account doesnt exist with given input
+    return True
+
+
+def email(connect_title,time,location,user_email,user_name,mail_subject):
+    sender_address = "college.connect.cssi@gmail.com"
+    mail_to = user_name+" "+"<"+user_email+">"
+    mail_body = user_name+""":
+        Your Connect Event, """+connect_title+""", is scheduled for
+        """+time+""" at """+location+"""!
+
+        Thank you for choosing College Connect!!
+        The College Connect Team
+        """
+    mail_html = """
+        <html><head></head><body>"""+user_name+""":<br>
+        Your Connect Event, <b>"""+connect_title+"""</b>, is scheduled for
+        """+time+""" at """+location+"""!<br>
+
+        Thank you for choosing College Connect!!
+        The College Connect Team
+        </body></html>"""
+
+    # mail_html = """
+    #     <html><head></head><body>%(name)s :
+    #     Your Connect Event,<b> %(title)s </b>, is scheduled for
+    #     %(time)s at %(loc)s!
+    #
+    #     Thank you for choosing College Connect!!
+    #     The College Connect Team
+    #     </body></html>""" %
+    #     {'name':user_name,'title':connect_title,'time':time,'loc':location}
+
+    message = mail.EmailMessage(sender=sender_address,
+                                subject = mail_subject,
+                                to = mail_to,
+                                body = mail_body,
+                                html = mail_html)
+    message.send()
+
 
 class BaseHandler(webapp2.RequestHandler):              # taken from the webapp2 extrta session example
     def dispatch(self):                                 # override dispatch
@@ -52,11 +98,6 @@ class WelcomeHandler(BaseHandler):
             pass
             #display error message in welcome
 
-def verification(email,password):
-    #verify email and password
-    #return true if exists
-    #return false if account doesnt exist with given input
-    return True
 
 class SignUpHandler(BaseHandler):
     def get (self):
@@ -71,10 +112,23 @@ class SignUpHandler(BaseHandler):
         courses = self.request.get('courses') # list
         profile_pic = self.request.get('profile_pic')
         name = [first_name,last_name]
-        new_user = User(name = name, email = email,
-                        password = password, college = college,
-                        profile_pic = profile_pic, college_pic = "",
-                        friends=[],)
+
+        # if not mail.is_email_valid(email):
+        #     self.get()  # Show the form again.
+        # else:
+        #     confirmation_url = create_new_user_confirmation(email)
+        #     sender_address = "college.connect.cssi@gmail.com"
+        #     subject = 'Confirm your registration'
+        #     body = """Thank you for creating an account!
+        #     Please confirm your email address by clicking on the link below:
+        #     {}""".format(confirmation_url)
+        #     mail.send_mail(sender_address, email, subject, body)
+        #
+        # new_user = User(name = name, email = email,
+        #                 password = password, college = college,
+        #                 profile_pic = profile_pic, college_pic = "",
+        #                 friends=[],)
+
         new_user.put()
         self.session['user'] = email
 
@@ -90,6 +144,7 @@ class DashboardHandler(BaseHandler):
         user_dict={'user':user}
         dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
 
+        email("Fun","7/31/18 4:00pm","Honors College Residence North","zpghera00@gmail.com","Zach","Your thing is a thing")
 
         self.response.write(dashboard_template.render(user_dict))
 
@@ -127,9 +182,10 @@ class HostConnectHandler(BaseHandler):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         time = self.request.get('time')
         location = self.request.get('location')
-        alert_time = self.request.get('alert_time')
-        new_ConnectEvent = ConnectEvent(time = time,location = location,
-                                        alert_time = alert_time)
+        connect_title = self.request.get('title')
+        course = self.request.get('course')
+        new_ConnectEvent = ConnectEvent(time = time, location = location,
+                                        connect_title = connect_title, course = course)
         new_ConnectEvent_key = new_ConnectEvent.put()
         users_keys = [user.key]
         new_UserConnectEvent = UserConnectEvent(users=users_keys,
@@ -139,8 +195,6 @@ class HostConnectHandler(BaseHandler):
 class JoinConnectHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-
-
         user_dict={'user':user}
         joinconnect_template = JINJA_ENVIRONMENT.get_template('templates/joinconnect.html')
         self.response.write(joinconnect_template.render(user_dict))

@@ -123,11 +123,11 @@ class SignUpHandler(BaseHandler):
         #     Please confirm your email address by clicking on the link below:
         #     {}""".format(confirmation_url)
         #     mail.send_mail(sender_address, email, subject, body)
-        #
-        # new_user = User(name = name, email = email,
-        #                 password = password, college = college,
-        #                 profile_pic = profile_pic, college_pic = "",
-        #                 friends=[],)
+
+        new_user = User(name = name, email = email,
+                        password = password, college = college,
+                        profile_pic = profile_pic, college_pic = "",
+                        friends=[],)
 
         new_user.put()
         self.session['user'] = email

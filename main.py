@@ -144,7 +144,7 @@ class DashboardHandler(BaseHandler):
         user_dict={'user':user}
         dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
 
-        email("Fun","7/31/18 4:00pm","Honors College Residence North","zpghera00@gmail.com","Zach","Your thing is a thing")
+        email("Party","7/31/18 4:00pm","The moon","abdinajka@gmail.com","Najib","Here is your email")
 
         self.response.write(dashboard_template.render(user_dict))
 

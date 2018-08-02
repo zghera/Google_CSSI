@@ -31,8 +31,10 @@ class CourseRoster(ndb.Model):
     course = ndb.KeyProperty(Course)
 
 class ConnectEvent(ndb.Model):
-    time = ndb.StringProperty(required=True)
-    location = ndb.StringProperty(required=True)
+    created_time = ndb.DateTimeProperty(auto_now_add = True, auto_now=False)
+    connect_time = ndb.DateTimeProperty(required = True)
+    durration = ndb.FloatProperty(default = 1)
+    connect_location = ndb.GeoPtProperty(required=True)
     connect_title = ndb.StringProperty(required=True)
     course = ndb.KeyProperty(Course)
 

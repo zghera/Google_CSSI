@@ -12,6 +12,7 @@ from models import *
 from google.appengine.api import mail
 from models import*
 import datetime
+import time
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -238,8 +239,9 @@ class DashboardHandler(BaseHandler):
         if len(post_content)>0:
             new_post = FeedMessage(post=post_content)
             new_post.put()
-
+        time.sleep(1)
         self.redirect('/dashboard')
+
 
 class FeedHandler(BaseHandler):
     def get(self):
@@ -356,12 +358,12 @@ class ViewConnectsHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-        
+
 class AboutUsHandler(BaseHandler):
     def get(self):
         creators_template = JINJA_ENVIRONMENT.get_template('templates/aboutus.html')
         self.response.write(creators_template.render())
-        
+
 class SettingsHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
@@ -387,7 +389,6 @@ app = webapp2.WSGIApplication([
     ('/joinconnect', JoinConnectHandler),
     ('/friends', FriendsHandler),
     ('/courses', CoursesHandler),
-    ('/upcomingconnects', UpcomingConnectsHandler),
     ('/aboutus', AboutUsHandler),
     ('/messages',MessagesHandler),
     ('/settings',SettingsHandler),

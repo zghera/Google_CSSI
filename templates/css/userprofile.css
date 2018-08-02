@@ -11,16 +11,22 @@ div {
 #user_pic{
   width:20%;
   height:250px;
+  padding-right: -10px;
 }
 
 #college_pic{
   width:79%;
   height:250px;
 }
+
 .title {
   color: grey;
   font-size: 18px;
   text-align: center;
+}
+
+.label{
+  padding-top: 40px;
 }
 
 button {

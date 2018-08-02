@@ -28,11 +28,11 @@ event = {
     'timeZone': 'America/Los_Angeles',
   },
   'recurrence': [
-    'RRULE:FREQ=DAILY;COUNT=0'
+    'RRULE:FREQ=DAILY;COUNT=1'
   ],
   'attendees': [
-    {'email': 'abdinajka@gmail.com'},
-    {'email': 'teddymk@google.com'},
+    {'email': 'donny.lao64@gmail.com'},
+    {'email': 'karlee.l.wong@gmail.com'},
   ],
   'reminders': {
     'useDefault': False,

@@ -5,14 +5,7 @@ import os
 from webapp2_extras import sessions
 from google.appengine.api import mail
 from models import*
-# from models import User
-# from models import ConnectEvent
-# from models import UserConnectEvent
-# from models import FeedMessage
-# from models import Course
-# from models import CourseRoster
-# from models import Organization
-# from models import OrganizationRoster
+import getpass
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -227,6 +220,10 @@ class UpcomingConnectsHandler(BaseHandler):
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
 
+class AboutUsHandler(BaseHandler):
+    def get(self):
+        creators_template = JINJA_ENVIRONMENT.get_template('templates/aboutus.html')
+        self.response.write(creators_template.render())
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -244,4 +241,5 @@ app = webapp2.WSGIApplication([
     ('/friends', FriendsHandler),
     ('/courses', CoursesHandler),
     ('/upcomingconnects', UpcomingConnectsHandler),
+    ('/aboutus', AboutUsHandler)
 ], debug=True, config=config)

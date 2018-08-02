@@ -9,7 +9,7 @@
      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"> -->
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-     <link href="css/signup.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+     <link href="css/welcome.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   </head>
   <body>
     <!-- <div class="carousel carousel-slider">
@@ -18,10 +18,15 @@
       <a class="carousel-item" href="#three!"><img src="https://lorempixel.com/800/400/food/3"></a>
       <a class="carousel-item" href="#four!"><img src="https://lorempixel.com/800/400/food/4"></a>
     </div> -->
-    <div class="container">
+    <div class="container fluid">
       <div class="row valign-wrapper">
-        <div class="col s8 offset-s2 valign">
-          <div class="card-panel center">
+        <div id="color" class="col s8 offset-s2 valign">
+          <div class="card-panel z-depth-1 center">
+            {% if error == 'error' %}
+              <script type="text/javascript">
+                error_alert();
+              </script>
+            {% endif %}
             <h2>College Connect</h2>
               <form action="/" method="post">
                 <div class="input-field col s11">
@@ -32,7 +37,7 @@
                 <div class="row">
                   <div class="input-field col s11 push-3">
                     <i class="material-icons prefix">lock</i>
-                    <input id="password" type="text" class="validate" name="password" required>
+                    <input id="password" type="password" class="validate" name="password" required>
                     <label for="password">Password</label>
                   </div>
                 </div>
@@ -45,51 +50,10 @@
           </div>
         </div>
       </div>
-
-
-
     <!--  Scripts-->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    <script src="js/signup.js"></script>
+    <!-- <script src="js/welcome.js"></script> -->
   </body>
 </html>
-
-<!-- <!DOCTYPE html>
- <html>
-   <head>
-     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-     <title>College Connect</title>
-
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-     <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-     <link href="css/welcome.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-   </head>
-   <body>
-     <div class="welcome-bg responsive-img">
-         <div>
-           <h1 class="flow-text big-header center-align light-blue-text text-lighten-2">College Connect</h1>
-         </div>
-         <div class = "container">
-           <form action="/" method="post">
-             <div class = "container welcome-bg2">
-               <p class="flow-text light-blue-text">Email:</p>
-               <input class = "light-blue-text text-darken-1" type="text" name="email" value=""></p>
-               <p class="flow-text light-blue-text">Password:</p>
-               <input class = "light-blue-text text-darken-1" type="text" name="password" value="">
-               <div class="row">
-                 <div class="col left-align"><button class="btn waves-effect waves-light light-blue darken-2" type="submit" name="login">LOG IN<i class="material-icons right">lock_open</i></button></div>
-                 <div class="right-align"><a href="/signup" class="btn waves-effect waves-light light-blue darken-2" name="signup">SIGN UP<i class="material-icons right">create</i></a></div>
-               </div>
-             </div>
-           </form>
-       </div>
-     </div>
-
-     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-     <script type="text/javascript" src="js/materialize.min.js"></script>
-     <script src="js/welcome.js" type="text/javascript"></script>
-   </body>
- </html> -->

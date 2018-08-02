@@ -20,8 +20,8 @@ handlers:
 - url: /app-stylesheets
   static_dir: app-stylesheets
 
-- url: /my-images
-  static_dir: my-images
+- url: /images
+  static_dir: images
 
 - url: .*
   script: main.app

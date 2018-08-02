@@ -15,9 +15,9 @@
     {% include 'templates/partials/navbar.html' %}
 
     <!--Post Status Bar-->
-      <div class="cardpanel" style="padding-top: 15px">
+      <div class="cardpanel blue-grey lighten-5" style="padding-top: 15px">
         <div class="row">
-          <div class="col s6 push-s3">
+          <div id="color" class="col s6 push-s3"> <!--color-->
             <div class="card-panel">
               <div class="row">
                 <form class="col s12" method="post" action="/dashboard">
@@ -25,7 +25,7 @@
                     <div class="input-field col s12">
                       <input id="status" type="text" class="validate" name="status">
                       <label class="active" for="status">Write a Post <i class="material-icons">edit</i></label>
-                      <button class="btn waves-effect right" type="submit" name="post">Post<i class="material-icons right">edit</i></button>
+                      <button id="color" class="btn waves-effect right" type="submit" name="post">Post<i class="material-icons right">edit</i></button>
                     </div>
                   </div>
                 </form>
@@ -37,9 +37,9 @@
 
     <!-- My Feed-->
     {% for post in post %}
-      <div class="cardpanel">
+      <div class="cardpanel blue-grey lighten-5">
         <div class="row">
-          <div class="col s6 push-s3">
+          <div id= "posts" class="col s6 push-s3"> <!--color-->
             <div class="card-panel">
               <div class="row">
                 {% if post.post %}
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      {% endfor %}
+    {% endfor %}
 
     <!--  Scripts-->
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->

@@ -13,6 +13,11 @@
   </head>
   <body>
     {% include 'templates/partials/navbar.html'%}
+    <form align="right" name="form1" method="post" action="log_out.php">
+  <label class="logoutLblPos">
+  <input name="submit2" type="submit" id="submit2" value="log out">
+  </label>
+</form>
 
     <!--Post Status Bar-->
       <div class="cardpanel" style="padding-top: 15px">
@@ -58,6 +63,6 @@
       $(".button-collapse").sideNav();
       </script>
     </body>
-    
+
     {% include 'templates/partials/footer.html'%}
 </html>

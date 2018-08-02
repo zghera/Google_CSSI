@@ -20,9 +20,8 @@
                   <div class="row"><img id="user_pic" src ="https://cdn.thegentlemansjournal.com/wp-content/uploads/2015/10/SteveJobsSquare-TGJ.jpg" alt="Steve">
                   <img id="college_pic" src ="http://news.mit.edu/sites/mit.edu.newsoffice/files/images/gateway-arch%20copy.jpg" alt="Steve"></div>
                   <h1 style="text-align: center">{{user.name[0]+" "+user.name[1]}}</h1>
-                  <p style="text-align: center">{{user.college}}</p>
+                  <h5 style="text-align: center">{{user.college}}</h5>
                   <div style="text-align: center" = "margin: 14px 0;">
-                    <a href="#"><i class="fa fa-dribbble"></i></a>
                     <a href="#"><i class="fa fa-twitter"></i></a>
                     <a href="#"><i class="fa fa-linkedin"></i></a>
                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -31,29 +30,27 @@
         </span>
       <!-- </div>
       <div class="row"> -->
-        <span class="container2">
+        <div class="container2">
            <h3>User Profile</h3>
-           <form action="action_page.php">
 
              <h6>About</h6>
+
+             <label class = "label" for="lname">College Name</label>
+             <p>{{user.college}}</p>
+
              <input type="text" id="" name="" placeholder="">
 
-             <label for="lname">College Name</label>
+             <label class = "label" for="Major">Major</label>
              <input type="text" id="" name="" placeholder="">
 
-             <label for="Major">Major</label>
-             <input type="text" id="" name="" placeholder="">
-
-             <label for="Hometown">Hometown</label>
+             <label class = "label" for="Hometown">Hometown</label>
              <input type="text" id="" name="" placeholder="">
 
              </select>
 
              <textarea id="subject" name="subject" placeholder="Bio" style="height:130px"></textarea>
 
-
-           </form>
-         </span>
+         </div>
           <span class="container3">
                 <table>
                   <tr>

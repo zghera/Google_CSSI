@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var instances = M.Dropdown.init(elems, null);
   });
 
-  //$('.dropdown-button').dropdown();
 
   function myFunction() {
       document.getElementById("mySelectCourse").classList.toggle("show");

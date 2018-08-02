@@ -5,7 +5,10 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
+<<<<<<< HEAD:templates/maps.html
 
+=======
+>>>>>>> master:templates/experiment/maps.html
       #map {
         height: 80%;
       }
@@ -51,6 +54,7 @@
     <input id="pac-input" class="controls" type="text"
         placeholder="Enter a location">
     <div id="map"></div>
+<<<<<<< HEAD:templates/maps.html
     <div id="infowindow-content">
       <span id="place-name"  class="title"></span><br>
       Place ID <span id="place-id"></span><br>
@@ -63,6 +67,15 @@
         let map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 47.60621, lng: -122.332071},
           zoom: 13
+=======
+
+    <script>
+      function initAutocomplete() {
+        let map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 12,
+          mapTypeId: 'roadmap'
+>>>>>>> master:templates/experiment/maps.html
         });
 
         let input = document.getElementById('pac-input');
@@ -111,7 +124,13 @@
         });
       }
     </script>
+<<<<<<< HEAD:templates/maps.html
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXFuSIl92TszVr52toDuwp9iZ-OK49oow&libraries=places&callback=initMap"
         async defer></script>
+=======
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXFuSIl92TszVr52toDuwp9iZ-OK49oow&callback=initAutocomplete"
+         async defer>
+    </script>
+>>>>>>> master:templates/experiment/maps.html
   </body>
 </html>

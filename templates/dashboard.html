@@ -13,7 +13,7 @@
   </head>
   <body>
     {% include 'templates/partials/navbar.html' %}
-    
+
     <!--Post Status Bar-->
       <div class="cardpanel" style="padding-top: 15px">
         <div class="row">
@@ -36,17 +36,21 @@
       </div>
 
     <!-- My Feed-->
-      <div class="cardpanel" hidden>
+    {% for post in post %}
+      <div class="cardpanel">
         <div class="row">
           <div class="col s6 push-s3">
             <div class="card-panel">
               <div class="row">
-                {{add_post}}
+                {% if post.post %}
+                  {{ post.post }}
+                {% endif %}
               </div>
             </div>
           </div>
         </div>
       </div>
+      {% endfor %}
 
     <!--  Scripts-->
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->

@@ -4,7 +4,7 @@ import jinja2
 import os
 from webapp2_extras import sessions
 from google.appengine.api import mail
-from models import *
+from models import*
 # from models import User
 # from models import ConnectEvent
 # from models import UserConnectEvent
@@ -109,72 +109,37 @@ class SignUpHandler(BaseHandler):
         courses = self.request.get('courses') # list
         profile_pic = self.request.get('profile_pic')
         name = [first_name,last_name]
+
         new_user = User(name = name, email = email,
                         password = password, college = college,
-                        profile_pic = profile_pic, college_pic = "",
+                        profile_pic = profile_pic,
                         friends=[])
-
-        # if not mail.is_email_valid(email):
-        #     self.get()  # Show the form again.
-        # else:
-        #     confirmation_url = create_new_user_confirmation(email)
-        #     sender_address = "college.connect.cssi@gmail.com"
-        #     subject = 'Confirm your registration'
-        #     body = """Thank you for creating an account!
-        #     Please confirm your email address by clicking on the link below:
-        #     {}""".format(confirmation_url)
-        #     mail.send_mail(sender_address, email, subject, body)
-        #
-        # new_user = User(name = name, email = email,
-        #                 password = password, college = college,
-        #                 profile_pic = profile_pic, college_pic = "",
-        #                 friends=[],)
 
         new_user.put()
         self.session['user'] = email
         self.redirect('/dashboard')
 
 class DashboardHandler(BaseHandler):
+
     def get(self): #get rid of eventually or check to see if signed in
-        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-                #user_key = User.query().filter(User.email == self.session.get('user')).get().key
-        posts = FeedMessage.query().fetch()
-        user_dict={'user':user}
+        all_posts_query = FeedMessage.query().order(-FeedMessage.date)
+        all_posts = all_posts_query.fetch()
+        post_values = {'post': all_posts}
         dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
+        self.response.write(dashboard_template.render(post_values))
 
-        email("Party","7/31/18 4:00pm","The moon","abdinajka@gmail.com","Najib","Here is your email")
-
-        self.response.write(dashboard_template.render(user_dict))
+        # # user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        # # email("Party","7/31/18 4:00pm","The moon","abdinajka@gmail.com","Najib","Here is your email")
 
     def post(self):
-        # feed_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
         post_content = self.request.get('status')
-        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
 
         if len(post_content)>0:
             new_post = FeedMessage(post=post_content)
             new_post.put()
-            test_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
-            all_posts = User.query().fetch()
-            add_post = {"post": all_posts}
-            self.response.write(test_template.render(add_post))
 
-            # get_post = get_post[0]
-            # get_content = get_post.post
+        self.redirect('/dashboard')
 
-            # template = {"post": post_content}
-            # self.response.write(feed_template.render(template))
-            # print(get_post)
-            # print(post_content)
-            # print(template)
-
-            self.redirect('/dashboard')
-
-        # update_feed = {"post_status": new_post}
-        # new_post.put()
-        # dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
-        #
-        # self.redirect('/')
 
 class FeedHandler(BaseHandler):
     def get(self):

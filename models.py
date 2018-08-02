@@ -23,7 +23,7 @@ class Course(ndb.Model):
     #description = ndb.StringProperty(required=True)
 
 class CourseRoster(ndb.Model):
-    user = ndb.KeyProperty(User)
+    user = ndb.KeyProperty(User,repeated=True)
     course = ndb.KeyProperty(Course)
 
 class ConnectEvent(ndb.Model):

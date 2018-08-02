@@ -3,7 +3,6 @@ import datetime
 from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file as oauth_file, client, tools
-
 from google.appengine.ext import ndb
 import webapp2
 import jinja2
@@ -11,6 +10,7 @@ import os
 from webapp2_extras import sessions
 from models import *
 from google.appengine.api import mail
+import datetime
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -83,7 +83,8 @@ def update_calendar_event(event_id,summary,location,description,start_dateTime,e
     event_attendees = the_event['attendees'].append(new_att_email_dict)
     updated_event = {'attendees': event_attendees}
 
-    service.events().patch(calendarId='college.connect.cssi@gmail.com',eventId=event_id,body=updated_event).execute()
+    service.events().patch(calendarId='college.connect.cssi@gmail.com', eventId=event_id,
+                            sendNotifications=True, body=updated_event).execute()
 
     return event_link
 
@@ -141,6 +142,17 @@ def email(type,event_id,connect_title,start_dateTime,end_dateTime,location,user_
     if type == "host":
         return event_id
 
+def date_parser (date):
+    index = date.find('/')
+    month = date[:index]
+    next_index = date.find('/',index+1)
+    day = date[index+1:next_index]
+    year = date[next_index+1:]
+    return {'month':month,'day':day,'year':year}
+
+
+
+
 class BaseHandler(webapp2.RequestHandler):              # taken from the webapp2 extrta session example
     def dispatch(self):                                 # override dispatch
         # Get a session store for this request.
@@ -188,7 +200,7 @@ class SignUpHandler(BaseHandler):
         email = self.request.get('email')
         password = self.request.get('password')
         college = self.request.get('college')
-        courses = self.request.get('courses') # list
+        courses = self.request.get('courses').split(", ") # list
         profile_pic = self.request.get('profile_pic')
         name = [first_name,last_name]
 
@@ -196,6 +208,9 @@ class SignUpHandler(BaseHandler):
                         password = password, college = college,
                         profile_pic = profile_pic,
                         friends=[])
+
+        # for course in Course.query().fetch():
+        #     if (course.name == )
 
 
         new_user.put()
@@ -266,11 +281,17 @@ class HostConnectHandler(BaseHandler):
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         date = self.request.get('date')
+        date_dict = date_parser(date)
+
+        month = date_dict['month']
+        day = date_dict['day']
+        year = date_dict['year']
+
         time_st = self.request.get('time_st')
         time_end = self.request.get('time_end')
 
-        start_dateTime =
-        end_dateTime =
+        start_dateTime = (year,month,day,0,0,0,0)
+        end_dateTime = (year,month,day,0,1,0,0)
 
         location = self.request.get('location')
         connect_title = self.request.get('title')

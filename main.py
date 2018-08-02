@@ -12,6 +12,7 @@ from models import *
 from google.appengine.api import mail
 from models import*
 import datetime
+import time
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -220,7 +221,6 @@ class SignUpHandler(BaseHandler):
         self.redirect('/dashboard')
 
 class DashboardHandler(BaseHandler):
-
     def get(self): #get rid of eventually or check to see if signed in
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         all_posts_query = FeedMessage.query().order(-FeedMessage.date)
@@ -238,8 +238,9 @@ class DashboardHandler(BaseHandler):
         if len(post_content)>0:
             new_post = FeedMessage(post=post_content)
             new_post.put()
-
+        time.sleep(1)
         self.redirect('/dashboard')
+
 
 class FeedHandler(BaseHandler):
     def get(self):
@@ -271,6 +272,11 @@ class HostConnectHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        location = self.request.get('location')
+        connect_title = self.request.get('title')
+        course = self.request.get('course')
+        print(course)
+
         date = self.request.get('date')
         date_dict = date_parser(date)
 
@@ -284,12 +290,10 @@ class HostConnectHandler(BaseHandler):
         start_dateTime = (year,month,day,0,0,0,0)
         end_dateTime = (year,month,day,0,1,0,0)
 
-        location = self.request.get('location')
-        connect_title = self.request.get('title')
-        course = self.request.get('course')
 
         new_ConnectEvent = ConnectEvent(start_dateTime = start_dateTime,end_dateTime = end_dateTime,
          connect_location = location, connect_title = connect_title, course = course)
+        
         new_ConnectEvent_key = new_ConnectEvent.put()
         users_keys = [user.key]
         new_UserConnectEvent = UserConnectEvent(users=users_keys,
@@ -297,6 +301,8 @@ class HostConnectHandler(BaseHandler):
         new_UserConnectEvent.put()
 
         new_UserConnectEvent.event_id = email("host","",connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
+
+        self.redirect('/dashboard')
 
 
 class JoinConnectHandler(BaseHandler):

@@ -18,37 +18,34 @@
       <a class="carousel-item" href="#three!"><img src="https://lorempixel.com/800/400/food/3"></a>
       <a class="carousel-item" href="#four!"><img src="https://lorempixel.com/800/400/food/4"></a>
     </div> -->
-  <div class = "welcome-bg">
-    <div class="row">
-      <div class="col s8">
-        <div class="container">
+    <div class="container">
+      <div class="row valign-wrapper">
+        <div class="col s8 offset-s2 valign">
           <div class="card-panel center">
             <h2>College Connect</h2>
               <form action="/" method="post">
-                <div class="row">
-                  <div class="input-field col s11">
-                    <i class="material-icons prefix">email</i>
-                    <input type="email" type="email" class="validate" name="email">
-                    <label for="email">Email</label>
-                  </div>
+                <div class="input-field col s11">
+                  <i class="material-icons prefix">email</i>
+                  <input type="email" type="email" class="validate" name="email" required>
+                  <label for="email">Email</label>
                 </div>
                 <div class="row">
                   <div class="input-field col s11 push-3">
                     <i class="material-icons prefix">lock</i>
-                    <input id="password" type="text" class="validate" name="password">
+                    <input id="password" type="text" class="validate" name="password" required>
                     <label for="password">Password</label>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col left-align"><button class="btn waves-effect waves-light light-blue darken-2 left" type="submit" name="login">log in<i class="material-icons right">lock_open</i></button></div>
-                  <div class="right-align"><a href="/signup" class="btn waves-effect waves-light light-blue darken-2 right" name="signup">sign up<i class="material-icons right">create</i></a></div>
+                  <div class="col left-align"><button class="btn waves-effect left" type="submit" name="login">log in<i class="material-icons right">lock_open</i></button></div>
+                  <div class="right-align"><a href="/signup" class="btn waves-effect right" name="signup">sign up<i class="material-icons right">create</i></a></div>
                 </div>
               </form>
             </div>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
+
     <!--  Scripts-->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -56,21 +53,6 @@
     <script src="js/signup.js"></script>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- <!DOCTYPE html>
  <html>

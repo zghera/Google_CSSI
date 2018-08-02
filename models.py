@@ -18,8 +18,8 @@ class User(ndb.Model):
     #connect_events = ndb.KeyProperty(ConnectEvent, repeated=True)
     #connect_events = ndb.StringProperty(repeated=True)
     friends = ndb.StringProperty(repeated=True)
-    profile_pic = ndb.StringProperty(required=True) #later use blobstore
-    college_pic = ndb.StringProperty(required=True) #later use blobstore
+    profile_pic = ndb.StringProperty(required=False) #later use blobstore
+    # college_pic = ndb.StringProperty(required=True) #later use blobstore
     #organizations = ndb.StringProperty(repeated=True)
 
 class Course(ndb.Model):
@@ -44,8 +44,8 @@ class UserConnectEvent(ndb.Model):
 
 class FeedMessage(ndb.Model):
     post = ndb.StringProperty(required=True)
-    user = ndb.KeyProperty(kind=User, required=False)
-
+    date = ndb.DateTimeProperty(auto_now_add=True)
+    # user = ndb.KeyProperty(kind=User, required=False)
 
 class Organization(ndb.Model):
     name = ndb.StringProperty(required=True)

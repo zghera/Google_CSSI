@@ -171,6 +171,7 @@ class BaseHandler(webapp2.RequestHandler):              # taken from the webapp2
 
 class WelcomeHandler(BaseHandler):
     def get(self):
+        self.session['user']= ""
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         error_dict = {'error':""}
         self.response.write(welcome_template.render(error_dict))
@@ -220,11 +221,12 @@ class SignUpHandler(BaseHandler):
 class DashboardHandler(BaseHandler):
 
     def get(self): #get rid of eventually or check to see if signed in
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         all_posts_query = FeedMessage.query().order(-FeedMessage.date)
         all_posts = all_posts_query.fetch()
-        post_values = {'post': all_posts}
+        user_dict = {'post': all_posts,'user':user}
         dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
-        self.response.write(dashboard_template.render(post_values))
+        self.response.write(dashboard_template.render(user_dict))
 
         # # user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         # # email("Party","7/31/18 4:00pm","The moon","abdinajka@gmail.com","Najib","Here is your email")
@@ -358,7 +360,7 @@ class SettingsHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
-        settings_template = JINJA_ENVIRONMENT.get_template('templates/partials/settings.html')
+        settings_template = JINJA_ENVIRONMENT.get_template('templates/settings.html')
         self.response.write(settings_template.render(user_dict))
 
     def post(self):

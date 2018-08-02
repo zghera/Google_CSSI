@@ -10,6 +10,12 @@
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
      <link href="css/signup.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+     <script type="text/javascript">
+       function error_alert(){
+         alert("Incorrect email and password information.");
+       }
+     </script>
   </head>
   <body>
     <!-- <div class="carousel carousel-slider">
@@ -22,6 +28,11 @@
       <div class="row valign-wrapper">
         <div class="col s8 offset-s2 valign">
           <div class="card-panel center">
+            {% if error == 'error' %}
+              <script type="text/javascript">
+                error_alert();
+              </script>
+            {% endif %}
             <h2>College Connect</h2>
               <form action="/" method="post">
                 <div class="input-field col s11">

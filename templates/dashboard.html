@@ -13,7 +13,7 @@
   </head>
   <body>
     {% include 'templates/partials/navbar.html' %}
-
+    
     <!--Post Status Bar-->
       <div class="cardpanel" style="padding-top: 15px">
         <div class="row">
@@ -25,7 +25,7 @@
                     <div class="input-field col s12">
                       <input id="status" type="text" class="validate" name="status">
                       <label class="active" for="status">Write a Post <i class="material-icons">edit</i></label>
-                      <button class="btn waves-effect right" type="submit" name="post">Post<i class="material-icons right">edit</i></button>
+                      <button id="post_button" class="btn waves-effect right" type="submit" name="post">Post<i class="material-icons right">edit</i></button>
                     </div>
                   </div>
                 </form>
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      {% endfor %}
+    {% endfor %}
 
     <!--  Scripts-->
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->
@@ -62,6 +62,6 @@
       $(".button-collapse").sideNav();
       </script>
     </body>
-    
+
     {% include 'templates/partials/footer.html'%}
 </html>

@@ -30,7 +30,7 @@ body{
   background-attachment: fixed;
 } */
 
-.container  {
+/* .container  {
   display: flex;
   position: absolute;
   top: 0;
@@ -46,4 +46,20 @@ body{
 .userp {
   display: inline;
   width: 100%;
+} */
+#color{
+  background-color: #26c6da;
+}
+.btn{
+  background-color: #4dd0e1;
+}
+.btn:hover {
+  background-color: #01579b;
+}
+.container {
+  margin: auto;
+  position: absolute;
+  padding-top: 14%;
+  width: 100%;
+  top: 0; left: 0; bottom: 0; right: 0;
 }

@@ -12,6 +12,7 @@ from models import *
 from google.appengine.api import mail
 from models import*
 import datetime
+import time
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -238,8 +239,9 @@ class DashboardHandler(BaseHandler):
         if len(post_content)>0:
             new_post = FeedMessage(post=post_content)
             new_post.put()
-
+        time.sleep(1)
         self.redirect('/dashboard')
+
 
 class FeedHandler(BaseHandler):
     def get(self):

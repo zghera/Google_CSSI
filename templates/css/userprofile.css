@@ -8,18 +8,37 @@ div {
   margin: 10px;
 }
 
-#user_pic{
-  width:20%;
-  height:250px;
-  padding-right: -10px;
-}
 
 #college_pic{
-  width:79%;
-  height:250px;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  height: 300px;
+  width: 99%;
+  z-index: 1;
+}
+
+#user_pic{
+  position: absolute;
+  top: 20%;
+  left: 5%;
+
+  height: 200px;
+  width:200px;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+#friends{
+  margin-top: 50px;
 }
 
 
+.par {
+  position: relative;
+  top: 0;
+  left: 0;
+}
 
 .title {
   color: grey;

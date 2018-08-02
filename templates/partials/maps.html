@@ -48,7 +48,7 @@
     </style>
   </head>
   <body>
-    <input id="pac-input" class="controls" type="text"
+    <input id="pac-input" name = "location" class="controls" type="text"
         placeholder="Enter a location">
     <div id="map"></div>
     <div id="infowindow-content">
@@ -104,7 +104,7 @@
           marker.setVisible(true);
 
           infowindowContent.children['place-name'].textContent = place.name;
-          infowindowContent.children['place-id'].textContent = place.place_id;
+          infowindowContent.children[''].textContent = place.place_id;
           infowindowContent.children['place-address'].textContent =
               place.formatted_address;
           infowindow.open(map, marker);

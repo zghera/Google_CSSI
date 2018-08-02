@@ -3,7 +3,6 @@ import datetime
 from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file as oauth_file, client, tools
-
 from google.appengine.ext import ndb
 import webapp2
 import jinja2
@@ -11,11 +10,8 @@ import os
 from webapp2_extras import sessions
 from models import *
 from google.appengine.api import mail
-<<<<<<< HEAD
 from models import*
-import getpass
-=======
->>>>>>> 20e8d9ed38be5a24c51355dcd2e34ef51ff7d42e
+import datetime
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -34,47 +30,81 @@ service = build('calendar', 'v3', http=creds.authorize(Http()))
 
 
 def verification(email,password):
-    #verify email and password
-    #return true if exists
-    #return false if account doesnt exist with given input
-    return True
+    users = User.query().fetch()
+    for user in users:
+        if user.email == email and user.password == password:
+            return True
+    return False
 
 
-def calendar_event(summary,location,description,time_zone,start_time,end_time,):
+def create_calendar_event(summary,location,description,time_zone,start_time,end_time,attendee_email):
     event = {
-      'summary': 'Come to the Party',
-      'location': '800 Howard St., San Francisco, CA 94103',
-      'description': 'Its gonna be L1T.',
+      'summary': summary,
+      'location': location,
+      'description': description,
       'start': {
-        'dateTime': '2018-09-01T09:00:00-07:00',
+        'dateTime': start_dateTime,
         'timeZone': 'America/Los_Angeles',
       },
       'end': {
-        'dateTime': '2018-09-01T17:00:00-07:00',
+        'dateTime': end_dateTime,
         'timeZone': 'America/Los_Angeles',
       },
-      'recurrence': [
-        'RRULE:FREQ=DAILY;COUNT=0'
-      ],
       'attendees': [
-        {'email': 'abdinajka@gmail.com'},
-        {'email': 'teddymk@google.com'},
+        {'email': attendee_email},
       ],
       'reminders': {
         'useDefault': False,
         'overrides': [
-          {'method': 'email', 'minutes': 24 * 60},
+          {'method': 'email', 'minutes': 6 * 60},
           {'method': 'popup', 'minutes': 60},
         ],
       },
     }
+
     event = service.events().insert(calendarId='college.connect.cssi@gmail.com', body=event).execute()
     event_link = event.get('htmlLink')
+    event_id = event['id']
+    return {'event_link':event_link,'event_id':event_id}
+
+
+def update_calendar_event(event_id,summary,location,description,start_dateTime,end_dateTime,attendee_email):
+    page_token = None
+    while True:
+      events = service.events().list(calendarId='college.connect.cssi@gmail.com', pageToken=page_token).execute()
+      for event in events['items']:
+        if event['id'] == event_id:
+            the_event = event
+      page_token = events.get('nextPageToken')
+      if not page_token:
+        break
+
+    event_link = the_event.get('htmlLink')
+    new_att_email_dict = {'email': attendee_email}
+    event_attendees = the_event['attendees'].append(new_att_email_dict)
+    updated_event = {'attendees': event_attendees}
+
+    service.events().patch(calendarId='college.connect.cssi@gmail.com', eventId=event_id,
+                            sendNotifications=True, body=updated_event).execute()
+
     return event_link
 
-def email(connect_title,time,location,user_email,user_name,mail_subject):
+
+def email(type,event_id,connect_title,start_dateTime,end_dateTime,location,user_email,user_name,mail_subject):
+    event_link = ""
+    event_id = event_id
+
+    if type == "host":
+        event_dict = create_calendar_event(connect_title,location,"College Connect Session",start_dateTime,end_dateTime,user_email)
+        event_link = event_dict['event_link']
+        event_id = event_dict['event_id']
+
+    elif type == "join":
+        event_link = update_calendar_event(event_id,connect_title,location,"College Connect Session",start_dateTime,end_dateTime,user_email)
+
     sender_address = "college.connect.cssi@gmail.com"
     mail_to = user_name+" "+"<"+user_email+">"
+    event_link = calendar_event()
     mail_body = user_name+""":
         Your Connect Event, """+connect_title+""", is scheduled for
         """+time+""" at """+location+"""!
@@ -87,7 +117,9 @@ def email(connect_title,time,location,user_email,user_name,mail_subject):
         Your Connect Event, <b>"""+connect_title+"""</b>, is scheduled for
         """+time+""" at """+location+"""!<br><br>
 
-        Thank you for choosing College Connect!!<br>
+        View and accept your calendar invite at: """+event_link+"""<br><br>
+
+        Thank you for choosing College Connect!!!<br>
         The College Connect Team
         </body></html>"""
 
@@ -108,6 +140,20 @@ def email(connect_title,time,location,user_email,user_name,mail_subject):
                                 html = mail_html)
     message.send()
 
+    if type == "host":
+        return event_id
+
+def date_parser (date):
+    index = date.find('/')
+    month = date[:index]
+    next_index = date.find('/',index+1)
+    day = date[index+1:next_index]
+    year = date[next_index+1:]
+    return {'month':month,'day':day,'year':year}
+
+
+
+
 class BaseHandler(webapp2.RequestHandler):              # taken from the webapp2 extrta session example
     def dispatch(self):                                 # override dispatch
         # Get a session store for this request.
@@ -126,10 +172,13 @@ class BaseHandler(webapp2.RequestHandler):              # taken from the webapp2
 
 class WelcomeHandler(BaseHandler):
     def get(self):
+        self.session['user']= ""
         welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
-        self.response.write(welcome_template.render())
+        error_dict = {'error':""}
+        self.response.write(welcome_template.render(error_dict))
 
     def post(self):
+        welcome_template = JINJA_ENVIRONMENT.get_template('templates/welcome.html')
         email = self.request.get('email')
         password = self.request.get('password')
 
@@ -139,7 +188,8 @@ class WelcomeHandler(BaseHandler):
             user_dict = {'user':user}
             self.redirect('/dashboard')
         else:
-            pass
+            error_dict = {'error':"error"}
+            self.response.write(welcome_template.render(error_dict))
             #display error message in welcome
 
 class SignUpHandler(BaseHandler):
@@ -152,7 +202,7 @@ class SignUpHandler(BaseHandler):
         email = self.request.get('email')
         password = self.request.get('password')
         college = self.request.get('college')
-        courses = self.request.get('courses') # list
+        courses = self.request.get('courses').split(", ") # list
         profile_pic = self.request.get('profile_pic')
         name = [first_name,last_name]
 
@@ -161,21 +211,9 @@ class SignUpHandler(BaseHandler):
                         profile_pic = profile_pic,
                         friends=[])
 
-        # if not mail.is_email_valid(email):
-        #     self.get()  # Show the form again.
-        # else:
-        #     confirmation_url = create_new_user_confirmation(email)
-        #     sender_address = "college.connect.cssi@gmail.com"
-        #     subject = 'Confirm your registration'
-        #     body = """Thank you for creating an account!
-        #     Please confirm your email address by clicking on the link below:
-        #     {}""".format(confirmation_url)
-        #     mail.send_mail(sender_address, email, subject, body)
+        # for course in Course.query().fetch():
+        #     if (course.name == )
 
-        new_user = User(name = name, email = email,
-                        password = password, college = college,
-                        profile_pic = profile_pic, college_pic = "",
-                        friends=[],)
 
         new_user.put()
         self.session['user'] = email
@@ -184,11 +222,12 @@ class SignUpHandler(BaseHandler):
 class DashboardHandler(BaseHandler):
 
     def get(self): #get rid of eventually or check to see if signed in
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         all_posts_query = FeedMessage.query().order(-FeedMessage.date)
         all_posts = all_posts_query.fetch()
-        post_values = {'post': all_posts}
+        user_dict = {'post': all_posts,'user':user}
         dashboard_template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
-        self.response.write(dashboard_template.render(post_values))
+        self.response.write(dashboard_template.render(user_dict))
 
         # # user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         # # email("Party","7/31/18 4:00pm","The moon","abdinajka@gmail.com","Najib","Here is your email")
@@ -244,22 +283,33 @@ class HostConnectHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-        time = self.request.get('time')
         date = self.request.get('date')
+        date_dict = date_parser(date)
 
-        durration = self.request.get('durration')
+        month = date_dict['month']
+        day = date_dict['day']
+        year = date_dict['year']
+
+        time_st = self.request.get('time_st')
+        time_end = self.request.get('time_end')
+
+        start_dateTime = (year,month,day,0,0,0,0)
+        end_dateTime = (year,month,day,0,1,0,0)
+
         location = self.request.get('location')
         connect_title = self.request.get('title')
         course = self.request.get('course')
-        new_ConnectEvent = ConnectEvent(connect_time = time_date, connect_location = location,
-                                durration = durration, connect_title = connect_title, course = course)
+
+        new_ConnectEvent = ConnectEvent(start_dateTime = start_dateTime,end_dateTime = end_dateTime,
+         connect_location = location, durration = durration, connect_title = connect_title, course = course)
         new_ConnectEvent_key = new_ConnectEvent.put()
         users_keys = [user.key]
         new_UserConnectEvent = UserConnectEvent(users=users_keys,
                                                 connect_event=new_ConnectEvent_key)
         new_UserConnectEvent.put()
 
-        email(connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
+        new_UserConnectEvent.event_id = email("host","",connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
+
 
 class JoinConnectHandler(BaseHandler):
     def get(self):
@@ -270,6 +320,9 @@ class JoinConnectHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
+
+        email("join",connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
 
 class FriendsHandler(BaseHandler):
     def get(self):
@@ -303,23 +356,21 @@ class ViewConnectsHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-
-<<<<<<< HEAD
+        
 class AboutUsHandler(BaseHandler):
     def get(self):
         creators_template = JINJA_ENVIRONMENT.get_template('templates/aboutus.html')
         self.response.write(creators_template.render())
-=======
+        
 class SettingsHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
-        settings_template = JINJA_ENVIRONMENT.get_template('templates/partials/settings.html')
+        settings_template = JINJA_ENVIRONMENT.get_template('templates/settings.html')
         self.response.write(settings_template.render(user_dict))
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
->>>>>>> 20e8d9ed38be5a24c51355dcd2e34ef51ff7d42e
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -332,20 +383,13 @@ app = webapp2.WSGIApplication([
     ('/dashboard', DashboardHandler),
     ('/feed', FeedHandler),
     ('/userprofile', UserProfileHandler),
-<<<<<<< HEAD
     ('/hostconnect', HostConnectHandler),
     ('/joinconnect', JoinConnectHandler),
     ('/friends', FriendsHandler),
     ('/courses', CoursesHandler),
     ('/upcomingconnects', UpcomingConnectsHandler),
-    ('/aboutus', AboutUsHandler)
-=======
-    ('/hostconnect',HostConnectHandler),
-    ('/joinconnect',JoinConnectHandler),
-    ('/friends',FriendsHandler),
-    ('/courses',CoursesHandler),
+    ('/aboutus', AboutUsHandler),
     ('/messages',MessagesHandler),
     ('/settings',SettingsHandler),
     ('/viewconnects',ViewConnectsHandler)
->>>>>>> 20e8d9ed38be5a24c51355dcd2e34ef51ff7d42e
 ], debug=True, config=config)

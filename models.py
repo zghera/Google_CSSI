@@ -10,13 +10,9 @@ class User(ndb.Model):
     email = ndb.StringProperty(required=True)
     password = ndb.StringProperty(required=True)
     college = ndb.StringProperty(required=True)
-    #courses = ndb.KeyProperty(Course, repeated=True) #list of courses/subjects
-    #courses = ndb.StringProperty(required=True)
     major = ndb.StringProperty(required=False)
     home_town = ndb.StringProperty(required=False)
     bio = ndb.StringProperty(required=False)
-    #connect_events = ndb.KeyProperty(ConnectEvent, repeated=True)
-    #connect_events = ndb.StringProperty(repeated=True)
     friends = ndb.StringProperty(repeated=True)
     profile_pic = ndb.StringProperty(required=False) #later use blobstore
     # college_pic = ndb.StringProperty(required=True) #later use blobstore
@@ -27,16 +23,17 @@ class Course(ndb.Model):
     #description = ndb.StringProperty(required=True)
 
 class CourseRoster(ndb.Model):
-    user = ndb.KeyProperty(User)
+    user = ndb.KeyProperty(User,repeated=True)
     course = ndb.KeyProperty(Course)
 
 class ConnectEvent(ndb.Model):
-    created_time = ndb.DateTimeProperty(auto_now_add = True, auto_now=False)
-    connect_time = ndb.DateTimeProperty(required = True)
-    durration = ndb.FloatProperty(default = 1)
+    created_dateTime = ndb.DateTimeProperty(auto_now_add = True, auto_now=False)
+    start_dateTime = ndb.DateTimeProperty(required = True)
+    end_dateTime = ndb.DateTimeProperty(required = True)
     connect_location = ndb.GeoPtProperty(required=True)
     connect_title = ndb.StringProperty(required=True)
     course = ndb.KeyProperty(Course)
+    event_id = ndb.StringProperty(required=False)
 
 class UserConnectEvent(ndb.Model):
     users = ndb.KeyProperty(User,repeated=True)

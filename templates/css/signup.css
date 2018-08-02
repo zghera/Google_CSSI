@@ -28,10 +28,14 @@
 
 
 .btn{
-  background-color: #4dd0e1
+  background-color: #4dd0e1;
 }
 .btn:hover {
-  background-color: #01579b
+  background-color: #01579b;
+}
+
+#color{
+  background-color: #26c6da;
 }
 
 

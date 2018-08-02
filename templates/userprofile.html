@@ -1,4 +1,67 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Parallax Template - Materialize</title>
+
+    <!--CSS-->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/userprofile.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+    <body>
+      {% include 'templates/partials/navbar.html' %}
+        <div class="parent">
+          <span class="card">
+            <img src ="https://cdn.thegentlemansjournal.com/wp-content/uploads/2015/10/SteveJobsSquare-TGJ.jpg" alt="Steve">
+            <h1 style="text-align: center">Steve Jobs</h1>
+            <p class="title">CEO & Founder, Example</p>
+            <p style="text-align: center">Harvard University</p>
+            <div style="text-align: center" = "margin: 14px 0;">
+              <a href="#"><i class="fa fa-dribbble"></i></a>
+              <a href="#"><i class="fa fa-twitter"></i></a>
+              <a href="#"><i class="fa fa-linkedin"></i></a>
+              <a href="#"><i class="fa fa-facebook"></i></a>
+            </div>
+            <p><button>Contact</button></p>
+          </span>
+          <span class="container2">
+             <h3>User Profile</h3>
+             <form action="action_page.php">
+               <label for="about">About</label>
+               <input type="text" id="" name="" placeholder="">
+               <label for="lname">College Name</label>
+               <input type="text" id="" name="" placeholder="">
+               <label for="Major">Major</label>
+               <input type="text" id="" name="" placeholder="">
+               <label for="Hometown">Hometown</label>
+               <input type="text" id="" name="" placeholder="">
+               <textarea id="subject" name="subject" placeholder="Bio" style="height:130px"></textarea>
+             </form>
+           </span>
+           <span class="container3">
+             <table>
+               <tr>
+                 <th>Friends</th>
+                 <th>Classes</th>
+                 <th>Upcoming Connects</th>
+               </tr>
+             </table>
+             <textarea id="subject" name="subject" placeholder="Write something..." style="height:450px"></textarea>
+           </span
+         </div>
+      <!--  Scripts-->
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->
+      <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script src="js/welcome.js" type="text/javascript"></script>
+    </body>
+  {% include 'templates/partials/footer.html'%}
+=======
  <html>
    <head>
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -73,4 +136,5 @@
    </body>
    {%include 'templates/partials/footer.html'%}
 
+>>>>>>> 20e8d9ed38be5a24c51355dcd2e34ef51ff7d42e
 </html>

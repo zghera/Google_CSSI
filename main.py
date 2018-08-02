@@ -10,6 +10,7 @@ import os
 from webapp2_extras import sessions
 from models import *
 from google.appengine.api import mail
+from models import*
 import datetime
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -355,7 +356,12 @@ class ViewConnectsHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-
+        
+class AboutUsHandler(BaseHandler):
+    def get(self):
+        creators_template = JINJA_ENVIRONMENT.get_template('templates/aboutus.html')
+        self.response.write(creators_template.render())
+        
 class SettingsHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
@@ -377,10 +383,12 @@ app = webapp2.WSGIApplication([
     ('/dashboard', DashboardHandler),
     ('/feed', FeedHandler),
     ('/userprofile', UserProfileHandler),
-    ('/hostconnect',HostConnectHandler),
-    ('/joinconnect',JoinConnectHandler),
-    ('/friends',FriendsHandler),
-    ('/courses',CoursesHandler),
+    ('/hostconnect', HostConnectHandler),
+    ('/joinconnect', JoinConnectHandler),
+    ('/friends', FriendsHandler),
+    ('/courses', CoursesHandler),
+    ('/upcomingconnects', UpcomingConnectsHandler),
+    ('/aboutus', AboutUsHandler),
     ('/messages',MessagesHandler),
     ('/settings',SettingsHandler),
     ('/viewconnects',ViewConnectsHandler)

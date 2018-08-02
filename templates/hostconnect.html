@@ -13,9 +13,35 @@
   </head>
   <body>
     {% include 'templates/partials/navbar.html' %}
-    <div>
-    
-    </div>
+    <div class="container">
+
+      <span class="container2">
+         <h3>Host Connect</h3>
+         <form action="action_page.php">
+
+           <label for="about">Title</label>
+           <input type="text" id="" name="" placeholder=""></input>
+
+           <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Select Course</a><br>
+         </br>
+
+           <label for="Major">Start</label>
+           <input type="date" id="myDate" value="08-01-2018">
+
+           <script>
+           function myFunction() {
+               var x = document.getElementById("myDate").value;
+               document.getElementById("demo").innerHTML = x;
+             }
+           </script>
+           <input type="text" id="" name="" placeholder="">
+         </form>
+
+         </span>
+
+       </div class="container">
+       {% include 'templates/partials/maps.html'%}
+
     <!--  Scripts-->
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->
       <!--JavaScript at end of body for optimized loading-->

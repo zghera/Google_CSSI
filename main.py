@@ -356,12 +356,12 @@ class ViewConnectsHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-        
+
 class AboutUsHandler(BaseHandler):
     def get(self):
         creators_template = JINJA_ENVIRONMENT.get_template('templates/aboutus.html')
         self.response.write(creators_template.render())
-        
+
 class SettingsHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
@@ -387,7 +387,6 @@ app = webapp2.WSGIApplication([
     ('/joinconnect', JoinConnectHandler),
     ('/friends', FriendsHandler),
     ('/courses', CoursesHandler),
-    ('/upcomingconnects', UpcomingConnectsHandler),
     ('/aboutus', AboutUsHandler),
     ('/messages',MessagesHandler),
     ('/settings',SettingsHandler),

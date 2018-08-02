@@ -17,23 +17,27 @@
 
       <span class="container2">
          <h3>Host Connect</h3>
-         <form action="action_page.php">
+         <form action="" method="post">
 
            <label for="about">Title</label>
-           <input type="text" id="" name="" placeholder=""></input>
+           <input type="text" id="" name="" placeholder=""></input><br>
 
-           <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Select Course</a>
-           <ul id='dropdown1' class='dropdown-content'>
-    <li><a href="#!">one</a></li>
-    <li><a href="#!">two</a></li>
-    <li class="divider" tabindex="-1"></li>
-    <li><a href="#!">three</a></li>
-    <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
-  </ul>
+           <!-- Dropdown Trigger -->
+             <button class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</button>
+             <!-- Dropdown Structure -->
+             <ul id='dropdown1' class='dropdown-content'>
+               <li><a href="#!">one</a></li>
+               <li><a href="#!">two</a></li>
+               <li class="divider" tabindex="-1"></li>
+               <li><a href="#!">three</a></li>
+               <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+               <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+             </ul>
 
+           <!-- {% include 'templates/partials/drop.html'%} -->
+         </br>
 
-           <label for="Major">Start</label>
+           <label for="Major">Date</label>
            <input type="date" id="myDate" value="08-01-2018">
 
            <script>
@@ -41,14 +45,21 @@
                var x = document.getElementById("myDate").value;
                document.getElementById("demo").innerHTML = x;
              }
-           </script>
-           <input type="text" id="" name="" placeholder="">
-         </form>
+           </script><br>
+         </br>
+         <label for="appt-time">Start Time:</label>
+         <input type="time" id="appt-time" name="appt-time" required />
 
+         <label for="appt-time">End Time:</label>
+         <input type="time" id="appt-time" name="appt-time" required />
+        </form>
          </span>
 
        </div class="container">
        {% include 'templates/partials/maps.html'%}
+       <div class="row">
+         <button class="btn waves-effect right" type="submit" name="signup">Submit<i class="material-icons right">send</i></button>
+       </div>
 
     <!--  Scripts-->
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->

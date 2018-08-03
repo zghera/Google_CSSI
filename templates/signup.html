@@ -43,12 +43,12 @@
               <input class="custom-class" name="courses" placeholder="(e.g.MA26100, ENGR16100, etc...)"  required>
               <label for="courses">Courses</label>
             </div>
-        <!--Password-->
+        <!-- URL Profile Pic -->
             <div class="row">
               <div class="input-field col s12">
-                <i class="material-icons prefix">lock</i>
-                <input id="password" type="password" class="validate" name="password" required>
-                <label for="password">Password</label>
+                <i class="material-icons prefix">photo</i>
+                <input type="url" class="validate" name="email" required>
+                <label for="url">Profile Picture URL</label>
               </div>
             </div>
         <!--Email-->
@@ -59,9 +59,16 @@
                 <label for="email">Email</label>
               </div>
             </div>
+        <!--Password-->
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">lock</i>
+                <input id="password" type="password" class="validate" name="password" required>
+                <label for="password">Password</label>
+              </div>
+            </div>
         <!--Upload Profile Pic-->
-          <!-- <form action="#" enctype="multipart/form-data"> -->
-            <div class="file-field input-field">
+            <!-- <div class="file-field input-field">
               <div class="btn">
                 <span>image</span>
                 <input type="file">
@@ -69,8 +76,7 @@
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text" placeholder="Upload a profile pic" name="profile_pic">
               </div>
-            </div>
-          <!--</form> -->
+            </div> -->
       <!--SignUp-->
           <div class="row">
             <button class="btn waves-effect right" type="submit" name="signup">Sign Up<i class="material-icons right">send</i></button>

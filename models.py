@@ -14,7 +14,7 @@ class User(ndb.Model):
     home_town = ndb.StringProperty(required=False)
     bio = ndb.StringProperty(required=False)
     friends = ndb.StringProperty(repeated=True)
-    profile_pic = ndb.StringProperty(required=False) #later use blobstore
+    profile_pic = ndb.StringProperty(required=True) #later use blobstore
     college_pic = ndb.StringProperty(required=False) #later use blobstore
     #organizations = ndb.StringProperty(repeated=True)
 
@@ -23,7 +23,7 @@ class Course(ndb.Model):
     #description = ndb.StringProperty(required=True)
 
 class CourseRoster(ndb.Model):
-    user = ndb.KeyProperty(User,repeated=True)
+    users_keys = ndb.KeyProperty(User,repeated=True)
     course = ndb.KeyProperty(Course)
 
 class ConnectEvent(ndb.Model):
@@ -36,7 +36,7 @@ class ConnectEvent(ndb.Model):
     event_id = ndb.StringProperty(required=False)
 
 class UserConnectEvent(ndb.Model):
-    users = ndb.KeyProperty(User,repeated=True)
+    users_keys = ndb.KeyProperty(User,repeated=True)
     connect_event = ndb.KeyProperty(ConnectEvent)
 
 class FeedMessage(ndb.Model):

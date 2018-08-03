@@ -13,6 +13,7 @@ from google.appengine.api import mail
 from models import*
 import datetime
 import time
+import json
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -271,10 +272,25 @@ class HostConnectHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-        location = self.request.get('location')
         connect_title = self.request.get('title')
-        course = self.request.get('course')
+        print("TITLE")
+        print(connect_title)
+
+        location = json.loads(self.request.body)['location']
+        print("location")
+        print(location)
+
+        # response = requests.get(url)
+        # tree = ElementTree.fromstring(response.content)
+        # print("Location (hopefully)")
+        # print(tree)
+
+        course = self.response.get('course')
+        print("COURSE")
         print(course)
+
+
+        print("----------------------------------------------------------------")
 
         date = self.request.get('date')
         date_dict = date_parser(date)
@@ -391,8 +407,34 @@ class AddFriendsHandler(BaseHandler):
 class CoursesHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-        user_dict={'user':user}
+        courses = Course.query().fetch()
+        courserosters = CourseRoster.query().fetch()
+        user_courselist_keys = []
+
+        for courseroster in courserosters:
+            if user.key in courseroster.users_keys:
+                user_courselist.append(courseroster.course)
+
+        user_courselist = []
+
+        for course_key in user_courselist_keys:
+            for course in courses:
+                if course.key == course_key:
+                    user_courselist.append(course.name)
+
+        course_dict={'user':user,'course_list':user_courselist}
+
         courses_template = JINJA_ENVIRONMENT.get_template('templates/courses.html')
+        self.response.write(courses_template.render(course_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
+class OrganizationsHandler(BaseHandler):
+    def get(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        courses_template = JINJA_ENVIRONMENT.get_template('templates/organizations.html')
         self.response.write(courses_template.render(user_dict))
 
     def post(self):
@@ -407,6 +449,17 @@ class SettingsHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user.college = self.request.get('college_name')
+        user.major = self.request.get('major')
+        user.home_town = self.request.get('home_town')
+        user.bio = self.request.get('bio')
+        user.profile_pic = self.request.get('user_pic')
+        user.college_pic = self.request.get('college_pic')
+
+        user.put()
+
+        self.redirect('/dashboard')
+
 
 class AboutUsHandler(BaseHandler):
     def get(self):
@@ -422,6 +475,7 @@ class ViewConnectsHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -442,8 +496,9 @@ app = webapp2.WSGIApplication([
     ('/friends', FriendsHandler),
     ('/addfriends', AddFriendsHandler),
     ('/courses', CoursesHandler),
+    ('/organizations',OrganizationsHandler),
     ('/aboutus', AboutUsHandler),
     ('/messages',MessagesHandler),
     ('/settings',SettingsHandler),
-    ('/viewconnects',ViewConnectsHandler)
+    ('/viewconnects',ViewConnectsHandler),
 ], debug=True, config=config)

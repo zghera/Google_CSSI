@@ -3,7 +3,7 @@
    <head>
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
      <meta name="viewport" content="width=device-width, initial-scale=1"/>
-     <title>Parallax Template - Materialize</title>
+     <title>Profile</title>
 
      <!--CSS-->
      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"> -->
@@ -24,14 +24,20 @@
           <div id="friends" class="card">
             <div class="card-tabs">
               <ul class="tabs tabs-fixed-width">
-                <li class="tab"><a class="active" href="/freinds">Friends</a></li>
+                <li class="tab"><a class="active" href="/friends">Friends</a></li>
                 <li class="tab"><a class="active" href="/courses">Courses</a></li>
                 <li class="tab"><a class="disabled" href="/organizations">Organizations</a></li>
               </ul>
             </div>
             <div class="card-content grey lighten-4">
               <ul class="collection">
-                {%%}
+                <li class="collection-item"><div><h6>Add Friends <a href="/addfriends" class="secondary-content"><i class="material-icons">add_circle</i></a></h6></div></li>
+                {% if user.friends|length > 0 %}
+                  {% for friend in user.friends %}
+                    print(friend.friend)
+                    <li class="collection-item">friend</li>
+                  {% endfor %}
+                {% endif %}
               </ul>
             </div>
           </div>

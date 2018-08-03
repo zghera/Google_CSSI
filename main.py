@@ -12,6 +12,7 @@ from models import *
 from google.appengine.api import mail
 from models import*
 import datetime
+import time
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -220,7 +221,6 @@ class SignUpHandler(BaseHandler):
         self.redirect('/dashboard')
 
 class DashboardHandler(BaseHandler):
-
     def get(self): #get rid of eventually or check to see if signed in
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         all_posts_query = FeedMessage.query().order(-FeedMessage.date)
@@ -238,8 +238,9 @@ class DashboardHandler(BaseHandler):
         if len(post_content)>0:
             new_post = FeedMessage(post=post_content)
             new_post.put()
-
+        time.sleep(1)
         self.redirect('/dashboard')
+
 
 class FeedHandler(BaseHandler):
     def get(self):
@@ -250,18 +251,6 @@ class FeedHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-
-class UserProfileHandler(BaseHandler):
-    def get (self):
-        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-        user_dict={'user':user}
-        userprofile_template = JINJA_ENVIRONMENT.get_template('templates/userprofile.html')
-        self.response.write(userprofile_template.render(user_dict))
-
-    def post(self):
-        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-        user_dict={'user':user}
-        newsfeed_template = JINJA_ENVIRONMENT.get_template('templates/userprofile.html')
 
 class MessagesHandler(BaseHandler):
     def get (self):
@@ -304,7 +293,7 @@ class HostConnectHandler(BaseHandler):
 
         new_ConnectEvent = ConnectEvent(start_dateTime = start_dateTime,end_dateTime = end_dateTime,
          connect_location = location, connect_title = connect_title, course = course)
-
+        
         new_ConnectEvent_key = new_ConnectEvent.put()
         users_keys = [user.key]
         new_UserConnectEvent = UserConnectEvent(users=users_keys,
@@ -334,7 +323,7 @@ class FriendsHandler(BaseHandler):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
         friends_template = JINJA_ENVIRONMENT.get_template('templates/friends.html')
-        self.response.write(freinds_template.render(user_dict))
+        self.response.write(friends_template.render(user_dict))
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
@@ -352,12 +341,12 @@ class CoursesHandler(BaseHandler):
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
 
-class ViewConnectsHandler(BaseHandler):
+class SettingsHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
-        viewconnects_template = JINJA_ENVIRONMENT.get_template('templates/partials/viewconnects.html')
-        self.response.write(viewconnects_template.render(user_dict))
+        settings_template = JINJA_ENVIRONMENT.get_template('templates/settings.html')
+        self.response.write(settings_template.render(user_dict))
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
@@ -367,12 +356,12 @@ class AboutUsHandler(BaseHandler):
         creators_template = JINJA_ENVIRONMENT.get_template('templates/aboutus.html')
         self.response.write(creators_template.render())
 
-class SettingsHandler(BaseHandler):
+class ViewConnectsHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
-        settings_template = JINJA_ENVIRONMENT.get_template('templates/settings.html')
-        self.response.write(settings_template.render(user_dict))
+        viewconnects_template = JINJA_ENVIRONMENT.get_template('templates/partials/viewconnects.html')
+        self.response.write(viewconnects_template.render(user_dict))
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
@@ -387,7 +376,6 @@ app = webapp2.WSGIApplication([
     ('/signup', SignUpHandler),
     ('/dashboard', DashboardHandler),
     ('/feed', FeedHandler),
-    ('/userprofile', UserProfileHandler),
     ('/hostconnect', HostConnectHandler),
     ('/joinconnect', JoinConnectHandler),
     ('/friends', FriendsHandler),

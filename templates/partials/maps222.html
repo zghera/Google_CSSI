@@ -44,7 +44,7 @@
             };
 
             infoWindow.setPosition(pos);
-            infoWindow.setContent('Title, ' + 'Location, ' + 'Start Time, ' + 'End Time, ' + 'Course, ' + 'Attendees ');
+            infoWindow.setContent('Location Found');
             infoWindow.open(map);
             map.setCenter(pos);
           }, function() {
@@ -64,8 +64,7 @@
         infoWindow.open(map);
       }
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXFuSIl92TszVr52toDuwp9iZ-OK49oow&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXFuSIl92TszVr52toDuwp9iZ-OK49oow&callback=initMap">
     </script>
   </body>
 </html>

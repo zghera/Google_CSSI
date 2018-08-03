@@ -59,7 +59,9 @@
       <span id="place-address"></span>
     </div>
 
+
     <script>
+      var connect_location;
 
       function initMap() {
         let map = new google.maps.Map(document.getElementById('map'), {
@@ -71,6 +73,16 @@
 
         let autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.bindTo('bounds', map);
+
+        // let xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function() {
+        //     if (this.readyState == 4 && this.status == 200) {
+        //        // Typical action to be performed when the document is ready:
+        //        xhttp.responseText = autocomplete;
+        //     }
+        // };
+        // xhttp.open("POST",'/hostconnect', true);
+        // xhttp.send();
 
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
@@ -106,12 +118,25 @@
           marker.setVisible(true);
 
           infowindowContent.children['place-name'].textContent = place.name;
-          infowindowContent.children[''].textContent = place.place_id;
+          infowindowContent.children['place-id'].textContent = place.place_id;
           infowindowContent.children['place-address'].textContent =
               place.formatted_address;
+
+          connect_location = place.geometry.location;
+
           infowindow.open(map, marker);
         });
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST','/hostconnect', true);
+        xhr.setRequestHeader("Content-Type","application/json;charset=UTF-8");
+        const locObj = {
+          location: "connect_location",
+        }
+        console.log(JSON.stringify(locObj))
+        xhr.send(JSON.stringify(locObj));
       }
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXFuSIl92TszVr52toDuwp9iZ-OK49oow&libraries=places&callback=initMap"
         async defer></script>

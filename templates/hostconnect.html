@@ -22,9 +22,9 @@
 
            <label for="about">Title</label>
            <input type="text" id="" name="" placeholder="" required /><br>
+          <br><br>
 
-
-            {% include 'templates/partials/who.html' %}
+           {% include 'templates/partials/who.html' %}
 
 
            <label for="Major">Date</label>
@@ -45,7 +45,9 @@
          </span>
 
        </div class="container">
+
        {% include 'templates/partials/maps.html'%}
+
        <div class="row">
          <button class="btn waves-effect right" type="submit" name="submit">Submit<i class="material-icons right">send</i></button>
        </div>
@@ -57,11 +59,6 @@
       <script type="text/javascript" src="js/materialize.min.js"></script>
       <script type="text/javascript" src="js/hostconnect.js">
       $(".button-collapse").sideNav();
-      </script>
-      <script>
-        /* When the user clicks on the button,
-        toggle between hiding and showing the dropdown content */
-
       </script>
     </body>
   {% include 'templates/partials/footer.html'%}

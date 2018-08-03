@@ -42,12 +42,14 @@
             <img src="https://cdn4.vectorstock.com/i/1000x1000/35/98/person-icon-female-user-profile-avatar-vector-18833598.jpg" alt="Avatar" style="width:100%;">
             {% if m.message %}
               {{ m.message }}
-              <span class="time-right"><script>
-              var timeOffsetInHours = -(new Date()).getTimezoneOffset()/60;
-              var date = new Date('{{m.date}}');
-              date.setHours(date.getHours() + timeOffsetInHours);
-              document.write(date.toLocaleString())</script></span>
-
+              <span class="time-right">
+                <script>
+                  var timeOffsetInHours = -(new Date()).getTimezoneOffset()/60;
+                  var date = new Date('{{m.date}}');
+                  date.setHours(date.getHours() + timeOffsetInHours);
+                  document.write(date.toLocaleString())
+                </script>
+              </span>
             {% endif %}
           </div>
         {% endfor %}

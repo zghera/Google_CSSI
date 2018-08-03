@@ -20,7 +20,7 @@ event = {
   'location': '800 Howard St., San Francisco, CA 94103',
   'description': 'Its gonna be L1T.',
   'start': {
-    'dateTime': '2018-09-01T09:00:00-07:00',
+    'dateTime': '2018-08-03T09:00:00-07:00',
     'timeZone': 'America/Los_Angeles',
   },
   'end': {
@@ -31,7 +31,7 @@ event = {
     'RRULE:FREQ=DAILY;COUNT=1'
   ],
   'attendees': [
-    {'email': 'donny.lao64@gmail.com'},
+    {'email': 'zpghera00@gmail.com'},
     {'email': 'karlee.l.wong@gmail.com'},
   ],
   'reminders': {

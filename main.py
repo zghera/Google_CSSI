@@ -449,7 +449,6 @@ class SettingsHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-<<<<<<< HEAD
         user.college = self.request.get('college_name')
         user.major = self.request.get('major')
         user.home_town = self.request.get('home_town')
@@ -460,8 +459,7 @@ class SettingsHandler(BaseHandler):
         user.put()
 
         self.redirect('/dashboard')
-=======
->>>>>>> master
+
 
 class AboutUsHandler(BaseHandler):
     def get(self):

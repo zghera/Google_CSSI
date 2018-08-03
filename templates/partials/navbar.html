@@ -1,12 +1,5 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-<link href="css/nav-foot.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
 <nav>
-  <div class="nav-wrapper">
+  <div class="nav-wrapper show-on-large">
     <a href="/dashboard" class="brand-logo center">College Connect</a>
     <ul id="slide-out" class="sidenav">
       <li>
@@ -14,9 +7,9 @@
           <div class="background">
             <img src="https://www.elmsln.org/sites/redesign/files/blog-post/Create%20Blog%20post/header-image/office.jpg">
           </div>
-          <a href="#user"><img class="circle" src="https://fmcisite.files.wordpress.com/2016/02/blank-profile-picture-973460_6404.png"></a>
-          <a href="#name"><span class="white-text name">First Last</span></a>
-          <a href="#email"><span class="white-text email">username@gmail.com</span></a>
+          <a href="#user"><img class="circle" src="{{user.profile_pic}}"></a>
+          <a href="#name"><span class="white-text name">{{user.name}} </span></a>
+          <a href="#email"><span class="white-text email">{{user.email}}</span></a>
         </div>
       </li>
       <li><a href="#!"><i class="material-icons">event_note</i>My Schedule</a></li>
@@ -28,14 +21,14 @@
     </ul>
     <!-- <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
 
-    <ul class="left hide-on-med-and down">
-      <a href="/dashboard" data-target="mobile-demo" class="sideNav"><i class="material-icons">menu</i></a>
+    <ul class="left">
+      <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
     </ul>
 
     <ul class="left hide-on-med-and down">
       <li><a href='/dashboard'><i class="material-icons prefix">home</i></a></li>
     </ul>
-    <ul class="right hide-on-med-and-down">
+    <ul class="right">
       <li><a href="/viewconnects"><i class="material-icons prefix">add_alert</i></a></li>
       <li><a href="/messages"><i class="material-icons prefix">message</i></a></li>
       <li><a href="/friends"><i class="material-icons prefix">account_circle</i></a></li>

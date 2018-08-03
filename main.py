@@ -314,9 +314,57 @@ class JoinConnectHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        self.redirect('/joinconnectlocation')
 
+        #email("join",connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
 
-        email("join",connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
+class JoinConnectLocationHandler(BaseHandler):
+    def get(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        joinconnectlocation_template = JINJA_ENVIRONMENT.get_template('templates/joinconnect_location.html')
+        self.response.write(joinconnectlocation_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
+        #email("join",connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
+
+class JoinConnectFriendsHandler(BaseHandler):
+    def get(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        joinconnectfriends_template = JINJA_ENVIRONMENT.get_template('templates/joinconnect_friends.html')
+        self.response.write(joinconnect_friends_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
+        #email("join",connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
+
+class JoinConnectCoursesHandler(BaseHandler):
+    def get(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        jjoinconnectcourses_template = JINJA_ENVIRONMENT.get_template('templates/joinconnect_courses.html')
+        self.response.write(joinconnectcourses_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
+        #email("join",connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
+
+class JoinConnectRecentHandler(BaseHandler):
+    def get(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        user_dict={'user':user}
+        joinconnectrecent_template = JINJA_ENVIRONMENT.get_template('templates/joinconnect_recent.html')
+        self.response.write(joinconnectrecent_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
+        #email("join",connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
 
 class FriendsHandler(BaseHandler):
     def get(self):
@@ -388,6 +436,10 @@ app = webapp2.WSGIApplication([
     ('/dashboard', DashboardHandler),
     ('/feed', FeedHandler),
     ('/hostconnect', HostConnectHandler),
+    ('/joinconnectlocation', JoinConnectLocationHandler),
+    ('/joinconnectfriends', JoinConnectFriendsHandler),
+    ('/joinconnectcourses', JoinConnectCoursesHandler),
+    ('/joinconnectrecent', JoinConnectRecentHandler),
     ('/joinconnect', JoinConnectHandler),
     ('/friends', FriendsHandler),
     ('/addfriends', AddFriendsHandler),

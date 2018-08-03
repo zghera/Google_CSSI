@@ -51,3 +51,9 @@ class Organization(ndb.Model):
 class OrganizationRoster(ndb.Model):
     user = ndb.KeyProperty(User)
     organization = ndb.KeyProperty(Organization)
+
+class Messages(ndb.Model):
+    # to_user = ndb.KeyProperty(User)
+    # from_user = ndb.KeyProperty(User)
+    message = ndb.StringProperty(required=True)
+    date = ndb.DateTimeProperty(auto_now_add=True)

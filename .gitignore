@@ -44,3 +44,7 @@ main.pyc
 *.pyc
 .DS_Store
 *.pyc
+templates/partials/menu.html
+templates/partials/menu.html
+templates/joinconnect.html
+templates/joinconnect.html

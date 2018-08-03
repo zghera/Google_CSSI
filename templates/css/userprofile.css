@@ -1,13 +1,7 @@
+
 h1{
   margin-top: -5px;
 }
-
-div {
-  border: 10px;
-  padding: 10px;
-  margin: 10px;
-}
-
 
 #college_pic{
   position: relative;
@@ -22,7 +16,6 @@ div {
   position: absolute;
   top: 20%;
   left: 5%;
-
   height: 200px;
   width:200px;
   border-radius: 50%;
@@ -33,7 +26,6 @@ div {
   margin-top: 50px;
   max-height: 600px;
 }
-
 
 .par {
   position: relative;
@@ -76,27 +68,31 @@ button:hover, a:hover {
 .container {
   width: 100%;
 }
-.container {
-  width:100%;
 
-}
 .parent{
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 1.5em;
 }
-.container2 {
 
-
-
+#aboutme {
+  border: 10px;
+  padding: 10px;
+  margin: 10px;
+  padding-left: 5%;
+  padding-right: 5%;
 }
-.card{
+#card {
   grid-column-start: 1;
   grid-column-end: 3;
+  border: 10px;
+  padding: 10px;
+  margin: 10px;
 }
-.container3 {
 
-
+.container3{
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .container {
@@ -104,11 +100,53 @@ button:hover, a:hover {
   margin-right: auto;
   margin-bottom: 100%;
   box-shadow: 0 4px 8px 0 rgba();
-
   margin: auto;
-
   font-family: arial;
 }
+
 .card img {
   width: 300px;
+}
+
+#subject{
+  border-color: #4dd0e1;
+}
+
+.hidden{
+  display: none !important;
+}
+
+.cardpanel{
+  margin-left: 50px
+  margin-right: 50px
+}
+
+#color{
+  background-color: #4dd0e1;
+}
+
+#posts{
+  background-color: #b2ebf2;
+}
+
+.btn:hover {
+  background-color: #01579b;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.nav-wrapper{
+  background-color: #26c6da;
+}
+
+.page-footer{
+  background-color: #26c6da;
 }

@@ -3,7 +3,7 @@
    <head>
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
      <meta name="viewport" content="width=device-width, initial-scale=1"/>
-     <title>Settings</title>
+     <title>User Settings</title>
 
      <!--CSS-->
      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"> -->
@@ -14,46 +14,45 @@
    </head>
    <body>
      {%include 'templates/partials/navbar.html'%}
-      <div class = "container">
-        <h1 >Settings</h1>
-        <span class="container2">
-           <form action="/settings" method="post">
-             <h6>Pictures</h6>
-             <label for="User Picture">User Picture</label>
-             <input type="text" id="" name="user_pic" placeholder="">
-
-             <label for="College Picture">College Picture</label>
-             <input type="text" id="" name="college_pic" placeholder="">
-
-             <br>
-             <h6>About</h6>
-
-             <label for="College name">College Name</label>
-             <input type="text" id="" name="college_name" placeholder="">
-
-             <label for="Major">Major</label>
-             <input type="text" id="" name="major" placeholder="">
-
-             <label for="Hometown">Hometown</label>
-             <input type="text" id="" name="home_town" placeholder="">
-
-             <label for="Bio">Bio</label>
-             <input type="text" id="" name="bio" placeholder="">
-
-
-             <div class="row">
-               <button class="btn waves-effect right" type="submit" name="settings">Save Changes<i class="material-icons right">send</i></button>
-             </div>
-           </form>
-
-
-     <!--  Scripts-->
-     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->
-     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-     <script type="text/javascript" src="js/materialize.min.js"></script>
-     <script src="js/welcome.js" type="text/javascript"></script>
-  </div>
-   </body>
-   {%include 'templates/partials/footer.html'%}
-
+     <div class="container">
+       <h2>Settings <i class="medium material-icons prefix">build</i></h2>
+       <div class="card-panel">
+         <h3>User Profile</h3>
+         <form action= "action_page.php">
+         <h6>Pictures</h6>
+         <i class="material-icons prefix">account_circle</i>
+         <label for="User Picture">User Picture</label>
+         <input type="text" id="" name="user_pic" placeholder="">
+         <i class="material-icons prefix">image</i>
+         <label for="College Picture">College Picture</label>
+         <input type="text" id="" name="college_pic" placeholder="">
+         <br>
+         <h6>About</h6>
+         <i class="material-icons prefix">school</i>
+         <label for="name">College Name</label>
+         <input type="text" id="" name="college_name" placeholder="">
+         <i class="material-icons prefix">storage</i>
+         <label for="Major">Major</label>
+         <input type="text" id="" name="" placeholder="">
+         <i class="material-icons prefix">home</i>
+         <label for="Hometown">Hometown</label>
+         <input type="text" id="" name="" placeholder="">
+         <i class="material-icons prefix">edit_mode</i>
+         <label for="Bio">Bio</label>
+         <input type="text" id="" name="" placeholder="">
+         <textarea id="subject" name="subject" placeholder="Bio" style="height:130px"></textarea>
+         <div class="row">
+           <button style="background-color: #4dd0e1" class="btn waves-effect right" type="submit" name="settings">Save Changes<i class="material-icons right">send</i></button>
+         </div>
+       </form>
+     </div>
+   </div>
+   <!--  Scripts-->
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->
+   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+   <script type="text/javascript" src="js/materialize.min.js"></script>
+   <script src="js/welcome.js" type="text/javascript"></script>
+ </div>
+</body>
+{%include 'templates/partials/footer.html'%}
 </html>

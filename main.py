@@ -293,7 +293,7 @@ class HostConnectHandler(BaseHandler):
 
         new_ConnectEvent = ConnectEvent(start_dateTime = start_dateTime,end_dateTime = end_dateTime,
          connect_location = location, connect_title = connect_title, course = course)
-        
+
         new_ConnectEvent_key = new_ConnectEvent.put()
         users_keys = [user.key]
         new_UserConnectEvent = UserConnectEvent(users=users_keys,
@@ -323,6 +323,17 @@ class FriendsHandler(BaseHandler):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         user_dict={'user':user}
         friends_template = JINJA_ENVIRONMENT.get_template('templates/friends.html')
+        self.response.write(friends_template.render(user_dict))
+
+    def post(self):
+        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+
+
+class AddFriendsHandler(BaseHandler):
+    def get(self):
+        all_users = User.query().fetch()
+        user_dict={'all_users':all_users}
+        friends_template = JINJA_ENVIRONMENT.get_template('templates/addfriends.html')
         self.response.write(friends_template.render(user_dict))
 
     def post(self):
@@ -379,6 +390,7 @@ app = webapp2.WSGIApplication([
     ('/hostconnect', HostConnectHandler),
     ('/joinconnect', JoinConnectHandler),
     ('/friends', FriendsHandler),
+    ('/addfriends', AddFriendsHandler),
     ('/courses', CoursesHandler),
     ('/aboutus', AboutUsHandler),
     ('/messages',MessagesHandler),

@@ -36,12 +36,25 @@
         <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
         <span class="time-right">11:05</span>
       </div>
+      <div style="padding-bottom:10%">
+        {% for m in message %}
+          <div id="msg-left" class="z-depth-4 container">
+            <img src="https://cdn4.vectorstock.com/i/1000x1000/35/98/person-icon-female-user-profile-avatar-vector-18833598.jpg" alt="Avatar" style="width:100%;">
+            {% if m.message %}
+              {{ m.message }}
+              <span class="time-right">{{m.date}}</span>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
 
-      <div id="box" class="z-depth-4 container center">
-        <form id="newmsg" class="sendmsg" action="/messages" method="post">
-          <input type="text" name="message">
-          <button id="color" class="btn waves-effect" type="submit" name="Send" value="Send">Send<i></i>
-        </form>
+      <div style="padding-bottom: 10%">
+        <div id="box" class="z-depth-4 container center">
+          <form id="newmsg" class="sendmsg" action="/messages" method="post">
+            <input type="text" name="message">
+            <button id="color" class="btn waves-effect" type="submit" name="Send" value="Send">Send<i></i>
+          </form>
+        </div>
       </div>
     </div>
 

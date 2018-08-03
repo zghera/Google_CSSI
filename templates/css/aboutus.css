@@ -3,6 +3,7 @@
   margin-top: 7%;
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: 8%;
 }
 #thumbs a {
   vertical-align: top;
@@ -12,6 +13,11 @@
 }
 .stretch {
   width: 100%;
+}
+
+#info{
+  padding-top: 10%;
+  background-color: #e1f5fe;
 }
 
 <style type="text/css">

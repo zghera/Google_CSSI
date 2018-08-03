@@ -9,7 +9,6 @@ h1{
 .cardpanel{
   margin-left: 50px
   margin-right: 50px
-
 }
 
 #color{
@@ -23,7 +22,6 @@ h1{
 .btn:hover {
   background-color: #01579b;
 }
-
 
 body {
   display: flex;

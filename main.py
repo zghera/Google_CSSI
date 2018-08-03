@@ -124,16 +124,6 @@ def email(type,event_id,connect_title,start_dateTime,end_dateTime,location,user_
         The College Connect Team
         </body></html>"""
 
-    # mail_html = """
-    #     <html><head></head><body>%(name)s :
-    #     Your Connect Event,<b> %(title)s </b>, is scheduled for
-    #     %(time)s at %(loc)s!
-    #
-    #     Thank you for choosing College Connect!!
-    #     The College Connect Team
-    #     </body></html>""" %
-    #     {'name':user_name,'title':connect_title,'time':time,'loc':location}
-
     message = mail.EmailMessage(sender=sender_address,
                                 subject = mail_subject,
                                 to = mail_to,
@@ -151,8 +141,6 @@ def date_parser (date):
     day = date[index+1:next_index]
     year = date[next_index+1:]
     return {'month':month,'day':day,'year':year}
-
-
 
 
 class BaseHandler(webapp2.RequestHandler):              # taken from the webapp2 extrta session example
@@ -241,7 +229,6 @@ class DashboardHandler(BaseHandler):
         time.sleep(1)
         self.redirect('/dashboard')
 
-
 class FeedHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
@@ -253,15 +240,27 @@ class FeedHandler(BaseHandler):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
 
 class MessagesHandler(BaseHandler):
+
     def get (self):
-        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-        user_dict={'user':user}
+        msg = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        all_messages_query = Messages.query().order(Messages.date)
+        all_messages = all_messages_query.fetch()
+        message_dict = {'message': all_messages}
         messages_template = JINJA_ENVIRONMENT.get_template('templates/messages.html')
-        self.response.write(messages_template.render(user_dict))
+        self.response.write(messages_template.render(message_dict))
 
     def post(self):
-        user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-        user_dict={'user':user}
+        message = self.request.get('message')
+        # to_user = self.request.get('to_user')
+        # from_user = self.request.get('from_user')
+        if len(message)>0:
+            new_msg = Messages(message=message)
+            new_msg.put()
+        time.sleep(1)
+        self.redirect('/messages')
+
+            # previous : user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+            # previous : user_dict={'user':user}
 
 class HostConnectHandler(BaseHandler):
     def get(self):
@@ -327,7 +326,6 @@ class FriendsHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-
 
 class AddFriendsHandler(BaseHandler):
     def get(self):

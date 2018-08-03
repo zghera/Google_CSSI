@@ -43,3 +43,4 @@ Thumbs.db
 main.pyc
 *.pyc
 .DS_Store
+*.pyc

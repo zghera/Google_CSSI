@@ -1,5 +1,4 @@
 from __future__ import print_function
-import datetime
 from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file as oauth_file, client, tools
@@ -7,11 +6,15 @@ from google.appengine.ext import ndb
 import webapp2
 import jinja2
 import os
+import argparse
 from webapp2_extras import sessions
 from models import *
 from google.appengine.api import mail
 from models import*
-import datetime
+from datetime import datetime
+from datetime import time
+from datetime import date
+from datetime import timedelta
 import time
 import json
 
@@ -25,8 +28,16 @@ SCOPES = 'https://www.googleapis.com/auth/calendar'
 store = oauth_file.Storage('token.json')
 creds = store.get()
 if not creds or creds.invalid:
+    parser = argparse.ArgumentParser()
+    class FlagsStuff(object):
+        auth_host_name = 'localhost'
+        logging_level = 'INFO'
+        noauth_local_webserver = 'localhost'
+        auth_host_port = ''
+    flags = FlagsStuff()
+    #flags = {'auth_host_name': 'localhost', 'logging_level': 'INFO'}
     flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
-    creds = tools.run_flow(flow, store)
+    creds = tools.run_flow(flow, store, flags)
 
 service = build('calendar', 'v3', http=creds.authorize(Http()))
 
@@ -39,17 +50,17 @@ def verification(email,password):
     return False
 
 
-def create_calendar_event(summary,location,description,time_zone,start_time,end_time,attendee_email):
+def create_calendar_event(summary,location,description,start_dateTime,end_dateTime,attendee_email):
     event = {
       'summary': summary,
       'location': location,
       'description': description,
       'start': {
-        'dateTime': start_dateTime,
+        'dateTime': start_dateTime.isoformat(),
         'timeZone': 'America/Los_Angeles',
       },
       'end': {
-        'dateTime': end_dateTime,
+        'dateTime': end_dateTime.isoformat(),
         'timeZone': 'America/Los_Angeles',
       },
       'attendees': [
@@ -105,19 +116,18 @@ def email(type,event_id,connect_title,start_dateTime,end_dateTime,location,user_
         event_link = update_calendar_event(event_id,connect_title,location,"College Connect Session",start_dateTime,end_dateTime,user_email)
 
     sender_address = "college.connect.cssi@gmail.com"
-    mail_to = user_name+" "+"<"+user_email+">"
-    event_link = calendar_event()
-    mail_body = user_name+""":
-        Your Connect Event, """+connect_title+""", is scheduled for
-        """+time+""" at """+location+"""!
+    mail_to = user_name[0]+" "+user_name[1]+" "+"<"+user_email+">"
+    mail_body = user_name[0]+" "+user_name[1]+""":
+        Your Connect Event, """+connect_title+""", is scheduled from
+        """+str(start_dateTime)+""" to """+str(end_dateTime)+""" at """+str(location)+"""!
 
         Thank you for choosing College Connect!!
         The College Connect Team
         """
     mail_html = """
-        <html><head></head><body>"""+user_name+""":<br><br>
-        Your Connect Event, <b>"""+connect_title+"""</b>, is scheduled for
-        """+time+""" at """+location+"""!<br><br>
+        <html><head></head><body>"""+user_name[0]+" "+user_name[1]+""":<br><br>
+        Your Connect Event, <b>"""+connect_title+"""</b>, is scheduled from
+        """+str(start_dateTime)+""" to """+str(end_dateTime)+""" at """+location+"""!<br><br>
 
         View and accept your calendar invite at: """+event_link+"""<br><br>
 
@@ -136,11 +146,11 @@ def email(type,event_id,connect_title,start_dateTime,end_dateTime,location,user_
         return event_id
 
 def date_parser (date):
-    index = date.find('/')
-    month = date[:index]
-    next_index = date.find('/',index+1)
-    day = date[index+1:next_index]
-    year = date[next_index+1:]
+    index = date.find('-')
+    year = int(date[:index])
+    next_index = date.find('-',index+1)
+    month = int(date[index+1:next_index])
+    day = int(date[next_index+1:])
     return {'month':month,'day':day,'year':year}
 
 
@@ -273,37 +283,33 @@ class HostConnectHandler(BaseHandler):
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
         connect_title = self.request.get('title')
-        print("TITLE")
-        print(connect_title)
 
-        location = json.loads(self.request.body)['location']
-        print("location")
-        print(location)
-
-        # response = requests.get(url)
-        # tree = ElementTree.fromstring(response.content)
-        # print("Location (hopefully)")
-        # print(tree)
-
-        course = self.response.get('course')
-        print("COURSE")
-        print(course)
-
-
-        print("----------------------------------------------------------------")
+        request_json = json.loads(self.request.get('json_loc'))
+        location = request_json['location']
+        course = request_json['course']
 
         date = self.request.get('date')
+
         date_dict = date_parser(date)
 
         month = date_dict['month']
         day = date_dict['day']
         year = date_dict['year']
 
-        time_st = self.request.get('time_st')
-        time_end = self.request.get('time_end')
+        time_st = self.request.get('time-st')
+        time_end = self.request.get('time-end')
 
-        start_dateTime = (year,month,day,0,0,0,0)
-        end_dateTime = (year,month,day,0,1,0,0)
+        start_time = time_st.split(":")
+        start_time_hour = int(start_time[0])
+        start_time_min = int(start_time[1])
+
+        end_time = time_end.split(":")
+        end_time_hour = int(end_time[0])
+        end_time_min = int(end_time[1])
+
+
+        start_dateTime = datetime(year,month,day,start_time_hour,start_time_min,0,0)
+        end_dateTime = datetime(year,month,day,end_time_hour,end_time_min,0,0)
 
 
         new_ConnectEvent = ConnectEvent(start_dateTime = start_dateTime,end_dateTime = end_dateTime,
@@ -311,11 +317,12 @@ class HostConnectHandler(BaseHandler):
 
         new_ConnectEvent_key = new_ConnectEvent.put()
         users_keys = [user.key]
-        new_UserConnectEvent = UserConnectEvent(users=users_keys,
+        new_UserConnectEvent = UserConnectEvent(users_keys=users_keys,
                                                 connect_event=new_ConnectEvent_key)
-        new_UserConnectEvent.put()
 
-        new_UserConnectEvent.event_id = email("host","",connect_title,time,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
+        new_UserConnectEvent.event_id = email("host","",connect_title,start_dateTime,end_dateTime,location,user.email,user.name,"College Connect: Your Connect Event is Scheduled!")
+
+        new_UserConnectEvent.put()
 
         self.redirect('/dashboard')
 
@@ -407,25 +414,25 @@ class AddFriendsHandler(BaseHandler):
 class CoursesHandler(BaseHandler):
     def get(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
-        courses = Course.query().fetch()
-        courserosters = CourseRoster.query().fetch()
-        user_courselist_keys = []
-
-        for courseroster in courserosters:
-            if user.key in courseroster.users_keys:
-                user_courselist.append(courseroster.course)
-
-        user_courselist = []
-
-        for course_key in user_courselist_keys:
-            for course in courses:
-                if course.key == course_key:
-                    user_courselist.append(course.name)
-
-        course_dict={'user':user,'course_list':user_courselist}
-
-        courses_template = JINJA_ENVIRONMENT.get_template('templates/courses.html')
-        self.response.write(courses_template.render(course_dict))
+        # courses = Course.query().fetch()
+        # courserosters = CourseRoster.query().fetch()
+        # user_courselist_keys = []
+        #
+        # for courseroster in courserosters:
+        #     if user.key in courseroster.users_keys:
+        #         user_courselist.append(courseroster.course)
+        #
+        # user_courselist = []
+        #
+        # for course_key in user_courselist_keys:
+        #     for course in courses:
+        #         if course.key == course_key:
+        #             user_courselist.append(course.name)
+        #
+        # course_dict={'user':user,'course_list':user_courselist}
+        #
+        # courses_template = JINJA_ENVIRONMENT.get_template('templates/courses.html')
+        # self.response.write(courses_template.render(course_dict))
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]

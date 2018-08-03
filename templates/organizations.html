@@ -30,9 +30,14 @@
               </ul>
             </div>
             <div class="card-content grey lighten-4">
-              <div id="test4">Test 1</div>
-              <div id="test5">Test 2</div>
-              <div id="test6">Test 3</div>
+              <ul class="collection">
+                <li class="collection-item"><div><h6>Add Organizations <a href="/addfriends" class="secondary-content"><i class="material-icons">add_circle</i></a></h6></div></li>
+                {% if user.friends|length > 0 %}
+                  {% for friend in user.friends %}
+                    print(friend.friend)
+                    <li class="collection-item">friend</li>
+                  {% endfor %}
+                {% endif %}
             </div>
           </div>
         </span>

@@ -361,6 +361,13 @@ class SettingsHandler(BaseHandler):
 
     def post(self):
         user = User.query().filter(User.email == self.session.get('user')).fetch()[0]
+        college = self.request.get('college_name')
+        major = self.request.get('major')
+        home_town = self.request.get('home_town')
+        bio = self.request.get('bio')
+        profile_pic = self.request.get('user_pic')
+        college_pic = self.request.get('college_pic')
+        self.redirect('/dashboard')
 
 class AboutUsHandler(BaseHandler):
     def get(self):

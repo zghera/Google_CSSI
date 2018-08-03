@@ -15,7 +15,7 @@ class User(ndb.Model):
     bio = ndb.StringProperty(required=False)
     friends = ndb.StringProperty(repeated=True)
     profile_pic = ndb.StringProperty(required=False) #later use blobstore
-    # college_pic = ndb.StringProperty(required=True) #later use blobstore
+    college_pic = ndb.StringProperty(required=False) #later use blobstore
     #organizations = ndb.StringProperty(repeated=True)
 
 class Course(ndb.Model):

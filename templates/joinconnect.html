@@ -15,11 +15,22 @@
     {% include 'templates/partials/navbar.html' %}
     <div class="container">
 
-    
+
+      <span class="container2">
+         <h3>Join a Connect</h3>
+         <form action="" method="post">
+
+           {% include 'templates/partials/who.html' %}
+           <div class="row">
+             <button class="btn waves-effect right" type="submit" name="signup">Submit<i class="material-icons right">send</i></button>
+           </div>
+
+         </form>
+       </div class="container">
+
+
        {% include 'templates/partials/maps.html'%}
-       <div class="row">
-         <button class="btn waves-effect right" type="submit" name="signup">Submit<i class="material-icons right">send</i></button>
-       </div>
+
 
     <!--  Scripts-->
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->

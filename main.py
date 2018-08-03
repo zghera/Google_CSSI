@@ -277,7 +277,7 @@ class HostConnectHandler(BaseHandler):
         print("TITLE")
         print(connect_title)
 
-        location = json.loads(self.request.body)[0]['location']
+        location = json.loads(self.request.body)['location']
         print("location")
         print(location)
 

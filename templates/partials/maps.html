@@ -126,17 +126,15 @@
 
           infowindow.open(map, marker);
         });
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST','/hostconnect', true);
-        xhr.setRequestHeader("Content-Type","application/json;charset=UTF-8");
-        const locObj = {
-          location: "connect_location",
-        }
-        console.log(JSON.stringify(locObj))
-        xhr.send(JSON.stringify(locObj));
       }
-
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST','/hostconnect', true);
+      xhr.setRequestHeader("Content-Type","application/json;charset=UTF-8");
+      const locObj = {
+        "location": "connect_location",
+      }
+      console.log(JSON.stringify(locObj))
+      xhr.send(JSON.stringify(locObj));
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXFuSIl92TszVr52toDuwp9iZ-OK49oow&libraries=places&callback=initMap"
         async defer></script>

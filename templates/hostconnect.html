@@ -21,32 +21,31 @@
          <form action="/hostconnect" method="post">
 
            <label for="about">Title</label>
-           <input type="text" id="" name="" placeholder="" required /><br>
+           <input type="text" id="" name="title" placeholder="" required /><br>
           <br><br>
 
            {% include 'templates/partials/who.html' %}
 
 
            <label for="Major">Date</label>
-           <input type="date" id="myDate" value="currentDate" required />
+           <input type="date" id="myDate" value="currentDate" name="name" required />
 
            <script>
            function myFunction() {
                var x = document.getElementById("myDate").value;
                document.getElementById("demo").innerHTML = x;
-             }
-           </script><br>
-         </br>
-         <label for="appt-time">Start Time:</label>
-         <input type="time" id="appt-time" name="appt-time" required />
+            }
+           </script><br></br>
+           <label for="appt-time">Start Time:</label>
+           <input type="time" id="appt-time" name="time-st" required />
 
-         <label for="appt-time">End Time:</label>
-         <input type="time" id="appt-time" name="appt-time" required />
-         </span>
+           <label for="appt-time">End Time:</label>
+           <input type="time" id="appt-time" name="time-end" required />
+        </span>
 
-       </div class="container">
+         </div class="container">
 
-       {% include 'templates/partials/maps.html'%}
+         {% include 'templates/partials/maps.html'%}
 
        <div class="row">
          <button class="btn waves-effect right" type="submit" name="submit">Submit<i class="material-icons right">send</i></button>

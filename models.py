@@ -16,28 +16,22 @@ class User(ndb.Model):
     friends = ndb.StringProperty(repeated=True)
     profile_pic = ndb.StringProperty(required=True) #later use blobstore
     college_pic = ndb.StringProperty(required=False) #later use blobstore
+    courses = ndb.StringProperty(repeated=True)
     #organizations = ndb.StringProperty(repeated=True)
 
-class Course(ndb.Model):
-    name = ndb.StringProperty(required=True)
-    #description = ndb.StringProperty(required=True)
-
-class CourseRoster(ndb.Model):
-    users_keys = ndb.KeyProperty(User,repeated=True)
-    course = ndb.KeyProperty(Course)
 
 class ConnectEvent(ndb.Model):
     created_dateTime = ndb.DateTimeProperty(auto_now_add = True, auto_now=False)
     start_dateTime = ndb.DateTimeProperty(required = True)
     end_dateTime = ndb.DateTimeProperty(required = True)
-    connect_location = ndb.GeoPtProperty(required=True)
+    connect_location = ndb.StringProperty(required=True)
     connect_title = ndb.StringProperty(required=True)
-    course = ndb.KeyProperty(Course)
-    event_id = ndb.StringProperty(required=False)
+    course = ndb.StringProperty(required=True)
 
 class UserConnectEvent(ndb.Model):
     users_keys = ndb.KeyProperty(User,repeated=True)
     connect_event = ndb.KeyProperty(ConnectEvent)
+    event_id = ndb.StringProperty(required=False)
 
 class FeedMessage(ndb.Model):
     post = ndb.StringProperty(required=True)
